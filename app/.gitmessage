@@ -1,0 +1,9 @@
+<type>(<scope>): <description>
+
+Types: feat | fix | refactor | chore | docs | style | test
+Scopes: ui | api | hooks | pages | config | deps | init
+
+Examples:
+  feat(ui): add Button component with variants
+  fix(api): handle network error gracefully
+  chore(deps): upgrade react-router-dom to v7

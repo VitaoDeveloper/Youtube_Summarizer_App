@@ -1,6 +1,6 @@
 # YouTube Summarizer App
 
-A web application that generates structured summaries of YouTube videos from a URL, with multi-language support, persistent history, and shareable links.
+Aplicação web que gera resumos estruturados de vídeos do YouTube a partir da URL, com suporte a múltiplos idiomas, histórico persistido e compartilhamento por link.
 
 ---
 
@@ -8,23 +8,23 @@ A web application that generates structured summaries of YouTube videos from a U
 
 **Backend** — NestJS + TypeScript, Prisma ORM, PostgreSQL  
 **Frontend** — React + Vite + TypeScript  
-**AI** — OpenAI API (gpt-4o-mini)  
-**Transcription** — `youtube-transcript` (no YouTube API Key required)
+**IA** — OpenAI API (gpt-4o-mini)  
+**Transcrição** — `youtube-transcript` (sem necessidade de API Key do YouTube)
 
 ---
 
-## Features
+## Funcionalidades
 
-- Video summaries in Portuguese, English, and Spanish
-- Three detail levels: short, medium, and detailed
-- Automatic key topic extraction
-- Per-user summary history
-- Shareable summary links (`/r/:slug`)
-- Export summary as `.md`
+- Resumo de vídeos em português, inglês e espanhol
+- Três níveis de detalhe: curto, médio e detalhado
+- Extração automática de tópicos principais
+- Histórico de resumos por usuário
+- Compartilhamento de resumo por link único (`/r/:slug`)
+- Exportação do resumo em `.md`
 
 ---
 
-## Project structure
+## Estrutura do projeto
 
 ```
 Youtube_Summarizer_App/
@@ -55,97 +55,97 @@ Youtube_Summarizer_App/
 
 ---
 
-## Prerequisites
+## Pré-requisitos
 
 - Node.js 20+
 - PNPM 10+
-- PostgreSQL running locally or via Docker
-- OpenAI API Key
+- PostgreSQL rodando localmente ou via Docker
+- Chave de API da OpenAI
 
 ---
 
-## Getting started
+## Como rodar
 
-### 1. Clone the repository
+### 1. Clone o repositório
 
 ```bash
 git clone https://github.com/VitaoDeveloper/Youtube_Summarizer_App.git
 cd Youtube_Summarizer_App
 ```
 
-### 2. Set up environment variables
+### 2. Configure as variáveis de ambiente
 
 ```bash
-# api/.env
+# backend/.env
 DATABASE_URL="postgresql://user:password@localhost:5432/yt_summarizer"
 OPENAI_API_KEY="sk-..."
 ```
 
 ```bash
-# app/.env
+# frontend/.env
 VITE_API_URL="http://localhost:3000"
 ```
 
-### 3. Install dependencies and run migrations
+### 3. Instale dependências e rode as migrations
 
 ```bash
 # Backend
-cd api
+cd backend
 pnpm install
 npx prisma migrate dev
 pnpm run start:dev
 
-# Frontend (in a separate terminal)
-cd app
+# Frontend (em outro terminal)
+cd frontend
 pnpm install
 pnpm run dev
 ```
 
-The app will be available at `http://localhost:5173`.
+A aplicação estará disponível em `http://localhost:5173`.
 
 ---
 
-## API endpoints
+## Endpoints da API
 
-| Method | Route | Description |
-|--------|-------|-------------|
-| `POST` | `/summary` | Generate a new summary |
-| `GET` | `/summary` | List summary history |
-| `GET` | `/summary/:slug` | Fetch summary by public slug |
-| `DELETE` | `/summary/:id` | Delete a summary |
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| `POST` | `/summary` | Gera um novo resumo |
+| `GET` | `/summary` | Lista histórico de resumos |
+| `GET` | `/summary/:slug` | Busca resumo por slug público |
+| `DELETE` | `/summary/:id` | Remove um resumo |
 
 ### Body — `POST /summary`
 
 ```json
 {
   "url": "https://youtube.com/watch?v=...",
-  "language": "en",
+  "language": "pt",
   "length": "medium"
 }
 ```
 
-**Fields:**
-- `url` — Video URL (required)
-- `language` — `pt` | `en` | `es` (default: `pt`)
-- `length` — `short` | `medium` | `detailed` (default: `medium`)
+**Campos:**
+- `url` — URL do vídeo (obrigatório)
+- `language` — `pt` | `en` | `es` (padrão: `pt`)
+- `length` — `short` | `medium` | `detailed` (padrão: `medium`)
 
-### Response
+### Resposta
 
 ```json
 {
   "id": "uuid",
   "slug": "abc123",
-  "videoTitle": "How the YouTube algorithm really works",
-  "summary": "The video explores...",
-  "topics": ["Algorithm", "SEO", "Engagement"],
-  "language": "en",
+  "videoTitle": "Como o algoritmo do YouTube funciona",
+  "summary": "O vídeo explora...",
+  "topics": ["Algoritmo", "SEO", "Engajamento"],
+  "language": "pt",
   "createdAt": "2025-06-02T14:00:00.000Z"
 }
 ```
 
 ---
 
-## Database schema
+## Schema do banco
 
 ```prisma
 model Summary {
@@ -165,8 +165,8 @@ model Summary {
 
 ## Roadmap
 
-- [ ] User authentication (JWT)
-- [ ] Support for entire playlists
-- [ ] PDF export
-- [ ] Offline mode with transcript caching
-- [ ] Public API interface with rate limiting
+- [ ] Autenticação de usuários (JWT)
+- [ ] Suporte a playlists inteiras
+- [ ] Exportação em PDF
+- [ ] Modo offline com cache de transcrições
+- [ ] Interface de API pública com rate limiting

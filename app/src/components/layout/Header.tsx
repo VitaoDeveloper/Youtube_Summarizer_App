@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes'
 import { useTranslation } from 'react-i18next'
 import { Sun, Moon, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { LanguageSwitcher } from '@/components/ui/language-switcher'
 
 export function Header() {
   const { t } = useTranslation()
@@ -31,9 +32,11 @@ export function Header() {
           <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t('nav.toggleTheme')}>
             {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
           </Button>
+          <LanguageSwitcher />
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
           <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t('nav.toggleTheme')}>
             {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
           </Button>

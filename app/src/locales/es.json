@@ -1,4 +1,9 @@
 {
+  "languages": {
+    "en": "English",
+    "pt": "Portugu\u00eas",
+    "es": "Espa\u00f1ol"
+  },
   "nav": {
     "summarize": "Resumir",
     "history": "Historial",

@@ -1,4 +1,4 @@
-export interface SummaryResponse {
+export type SummaryResponse = {
   id: string
   videoId: string
   title: string
@@ -9,7 +9,7 @@ export interface SummaryResponse {
   createdAt: string
 }
 
-export interface SummaryListItem {
+export type SummaryListItem = {
   id: string
   videoId: string
   title: string
@@ -17,13 +17,13 @@ export interface SummaryListItem {
   createdAt: string
 }
 
-export interface ApiError {
+export type ApiError = {
   message: string
   code: string
   status: number
 }
 
-export interface PaginatedResponse<T> {
+export type PaginatedResponse<T> = {
   data: T[]
   total: number
   page: number

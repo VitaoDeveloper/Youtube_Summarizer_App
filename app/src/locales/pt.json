@@ -1,4 +1,13 @@
 {
+  "nav": {
+    "summarize": "Resumir",
+    "history": "Histórico",
+    "toggleTheme": "Alternar tema",
+    "toggleMenu": "Alternar menu"
+  },
+  "footer": {
+    "builtWith": "Construído com React + Vite"
+  },
   "home": {
     "title": "Resumidor de YouTube",
     "subtitle": "Cole qualquer link do YouTube e obtenha um resumo conciso em segundos",
@@ -21,13 +30,16 @@
   "history": {
     "title": "Histórico de Resumos",
     "empty": "Nenhum resumo ainda. Vá resumir um vídeo!",
-    "searchPlaceholder": "Pesquisar por título..."
+    "searchPlaceholder": "Pesquisar por título...",
+    "view": "Visualizar",
+    "delete": "Excluir resumo"
   },
   "errors": {
     "network": "Erro de rede. Tente novamente.",
     "invalidUrl": "Insira uma URL do YouTube válida",
     "required": "Este campo é obrigatório",
-    "generic": "Algo deu errado"
+    "generic": "Algo deu errado",
+    "tryAgain": "Tentar novamente"
   },
   "notFound": {
     "title": "404 — Página não encontrada",

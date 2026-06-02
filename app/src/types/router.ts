@@ -1,3 +1,3 @@
-export interface RouteHandle {
+export type RouteHandle = {
   title?: string
 }

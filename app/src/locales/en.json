@@ -1,4 +1,13 @@
 {
+  "nav": {
+    "summarize": "Summarize",
+    "history": "History",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu"
+  },
+  "footer": {
+    "builtWith": "Built with React + Vite"
+  },
   "home": {
     "title": "YouTube Summarizer",
     "subtitle": "Paste any YouTube link and get a concise summary in seconds",
@@ -21,13 +30,16 @@
   "history": {
     "title": "Summary History",
     "empty": "No summaries yet. Go summarize a video!",
-    "searchPlaceholder": "Search by title..."
+    "searchPlaceholder": "Search by title...",
+    "view": "View",
+    "delete": "Delete summary"
   },
   "errors": {
     "network": "Network error. Please try again.",
     "invalidUrl": "Please enter a valid YouTube URL",
     "required": "This field is required",
-    "generic": "Something went wrong"
+    "generic": "Something went wrong",
+    "tryAgain": "Try again"
   },
   "notFound": {
     "title": "404 — Page not found",

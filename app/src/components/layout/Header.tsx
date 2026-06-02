@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from 'next-themes'
+import { useTranslation } from 'react-i18next'
 import { Sun, Moon, Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 export function Header() {
+  const { t } = useTranslation()
   const [menuOpen, setMenuOpen] = useState(false)
   const { theme, setTheme } = useTheme()
 
@@ -21,21 +23,21 @@ export function Header() {
 
         <nav className="hidden items-center gap-6 md:flex">
           <Link to="/summarize" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Summarize
+            {t('nav.summarize')}
           </Link>
           <Link to="/history" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            History
+            {t('nav.history')}
           </Link>
-          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t('nav.toggleTheme')}>
             {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
           </Button>
         </nav>
 
         <div className="flex items-center gap-2 md:hidden">
-          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label="Toggle theme">
+          <Button variant="ghost" size="icon" onClick={toggleTheme} aria-label={t('nav.toggleTheme')}>
             {theme === 'dark' ? <Sun className="size-5" /> : <Moon className="size-5" />}
           </Button>
-          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+          <Button variant="ghost" size="icon" onClick={() => setMenuOpen(!menuOpen)} aria-label={t('nav.toggleMenu')}>
             {menuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>
         </div>
@@ -49,14 +51,14 @@ export function Header() {
               className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               onClick={() => setMenuOpen(false)}
             >
-              Summarize
+              {t('nav.summarize')}
             </Link>
             <Link
               to="/history"
               className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
               onClick={() => setMenuOpen(false)}
             >
-              History
+              {t('nav.history')}
             </Link>
           </div>
         </nav>

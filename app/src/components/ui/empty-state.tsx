@@ -1,7 +1,7 @@
 import { cn } from '@/utils'
 import type { ReactNode } from 'react'
 
-interface EmptyStateProps {
+type EmptyStateProps = {
   icon: ReactNode
   title: string
   description?: string

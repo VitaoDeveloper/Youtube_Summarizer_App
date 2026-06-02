@@ -4,7 +4,7 @@ import type { SummaryListItem } from '@/types/api'
 
 const MAX_HISTORY = 50
 
-interface HistoryContextType {
+type HistoryContextType = {
   history: SummaryListItem[]
   addToHistory: (item: SummaryListItem) => void
   removeFromHistory: (id: string) => void

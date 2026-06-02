@@ -76,14 +76,14 @@ export function HistoryPage() {
                     <div className="flex items-center gap-2">
                       <Link to={`/summarize?id=${item.id}`}>
                         <Button variant="outline" size="sm">
-                          View
+                          {t('history.view')}
                         </Button>
                       </Link>
                       <Button
                         variant="ghost"
                         size="icon"
                         onClick={() => handleDelete(item.id)}
-                        aria-label="Delete summary"
+                        aria-label={t('history.delete')}
                       >
                         <Trash2 className="size-4" />
                       </Button>

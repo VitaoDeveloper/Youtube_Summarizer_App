@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'sonner'
 import { router } from '@/router'
+import { HistoryProvider } from '@/context/HistoryContext'
 import '@/lib/i18n'
 import '@/styles/index.css'
 
@@ -25,7 +26,9 @@ async function startApp() {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <RouterProvider router={router} />
+          <HistoryProvider>
+            <RouterProvider router={router} />
+          </HistoryProvider>
           <Toaster richColors position="bottom-right" />
         </ThemeProvider>
       </QueryClientProvider>

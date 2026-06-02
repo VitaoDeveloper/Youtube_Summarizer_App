@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { isValidYoutubeUrl } from '@/utils/validation'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { EmptyState } from '@/components/ui/empty-state'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -13,10 +14,8 @@ import { useSummarize } from '@/hooks/useSummarize'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-const YOUTUBE_REGEX = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+/
-
 const schema = z.object({
-  url: z.string().min(1, 'errors.required').regex(YOUTUBE_REGEX, 'errors.invalidUrl'),
+  url: z.string().min(1, 'errors.required').refine(isValidYoutubeUrl, 'errors.invalidUrl'),
 })
 
 type FormData = z.infer<typeof schema>

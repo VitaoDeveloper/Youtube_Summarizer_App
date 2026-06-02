@@ -1,18 +1,22 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'sonner'
-import './styles/index.css'
-import App from './App.tsx'
+import { router } from '@/router'
+import '@/lib/i18n'
+import '@/styles/index.css'
+
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <App />
+        <RouterProvider router={router} />
         <Toaster richColors position="bottom-right" />
       </ThemeProvider>
-    </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>,
 )

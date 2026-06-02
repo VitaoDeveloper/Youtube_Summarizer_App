@@ -1,0 +1,35 @@
+{
+  "home": {
+    "title": "Resumidor de YouTube",
+    "subtitle": "Pega cualquier enlace de YouTube y obtén un resumen conciso en segundos",
+    "cta": "Comenzar",
+    "feature1": "Resúmenes con IA",
+    "feature2": "Extracción de Puntos Clave",
+    "feature3": "Historial de Búsquedas"
+  },
+  "summary": {
+    "title": "Resumir Video",
+    "inputLabel": "URL de YouTube",
+    "inputPlaceholder": "https://youtube.com/watch?v=...",
+    "submit": "Resumir",
+    "submitting": "Resumiendo...",
+    "empty": "Ingresa una URL de YouTube para empezar",
+    "duration": "Duración",
+    "keyPoints": "Puntos Clave"
+  },
+  "history": {
+    "title": "Historial de Resúmenes",
+    "empty": "Aún no hay resúmenes. ¡Ve a resumir un video!",
+    "searchPlaceholder": "Buscar por título..."
+  },
+  "errors": {
+    "network": "Error de red. Inténtalo de nuevo.",
+    "invalidUrl": "Ingresa una URL de YouTube válida",
+    "required": "Este campo es obligatorio",
+    "generic": "Algo salió mal"
+  },
+  "notFound": {
+    "title": "404 — Página no encontrada",
+    "link": "Ir al inicio"
+  }
+}

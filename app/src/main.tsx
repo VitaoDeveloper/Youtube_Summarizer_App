@@ -8,15 +8,29 @@ import { router } from '@/router'
 import '@/lib/i18n'
 import '@/styles/index.css'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: 1, staleTime: 1000 * 60 * 5, refetchOnWindowFocus: false },
+  },
+})
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <RouterProvider router={router} />
-        <Toaster richColors position="bottom-right" />
-      </ThemeProvider>
-    </QueryClientProvider>
-  </StrictMode>,
-)
+async function startApp() {
+  if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    const { worker } = await import('@/mocks/browser')
+    await worker.start()
+  }
+
+  const root = document.getElementById('root')!
+  createRoot(root).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <RouterProvider router={router} />
+          <Toaster richColors position="bottom-right" />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+}
+
+void startApp()

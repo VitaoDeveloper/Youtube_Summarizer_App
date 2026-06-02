@@ -1,109 +1,130 @@
 # 05 — UI Components
 
 ## Purpose
-Build accessible, reusable, theme-aware UI primitives that all pages will use.
+Set up shadcn/ui primitives (already initialized in Prompt 01), add Sonner for toasts, and create a custom EmptyState component.
 
 ## Technical Specs
 
-### Utility — `src/utils/cn.ts`
-```ts
-import { clsx, type ClassValue } from 'clsx'
+### shadcn/ui Primitives
+Already installed in Prompt 01. Available at `src/components/ui/`:
+- `button.tsx` — polymorphic, variants (default/destructive/outline/secondary/ghost/link), sizes
+- `input.tsx` — with label, error state, focus ring
+- `card.tsx` — compound: `<Card>`, `<CardHeader>`, `<CardTitle>`, `<CardDescription>`, `<CardContent>`, `<CardFooter>`
+- `skeleton.tsx` — shimmer animation placeholder
+- `dialog.tsx` — accessible modal with overlay, focus trap, Escape dismiss
 
-export function cn(...inputs: ClassValue[]) {
-  return clsx(inputs)
-}
-```
-(Tailwind v4 doesn't need `tailwind-merge` — use `clsx` alone.)
+**Do not modify shadcn/ui files directly.** They are treated as external primitives. Configure via `components.json` if needed.
 
-### Components (all in `src/components/ui/`)
-
-#### `button.tsx`
-```ts
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from 'react'
-import { cn } from '@/utils/cn'
-import { Loader2 } from 'lucide-react'
-
-type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger'
-type ButtonSize = 'sm' | 'md' | 'lg'
-
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant
-  size?: ButtonSize
-  loading?: boolean
-  icon?: ReactNode
-}
-
-const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'bg-brand-500 text-white hover:bg-brand-600 disabled:bg-brand-200',
-  secondary: 'bg-surface-muted dark:bg-gray-800 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700',
-  ghost: 'hover:bg-gray-100 dark:hover:bg-gray-800',
-  danger: 'bg-red-500 text-white hover:bg-red-600',
-}
-
-const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-3 py-1.5 text-sm rounded-md',
-  md: 'px-4 py-2 text-sm rounded-lg',
-  lg: 'px-6 py-3 text-base rounded-lg',
-}
-
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = 'primary', size = 'md', loading, icon, children, disabled, ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        disabled={disabled || loading}
-        className={cn(
-          'inline-flex items-center justify-center gap-2 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed',
-          variantStyles[variant],
-          sizeStyles[size],
-          className,
-        )}
-        {...props}
-      >
-        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : icon}
-        {children}
-      </button>
-    )
-  },
-)
-
-Button.displayName = 'Button'
-```
-
-#### `input.tsx`
-- Props: `label`, `error`, `icon`, `wrapperClassName` 
-- Renders `<label>`, optional icon slot, `<input>` with focus ring, error message below
-- Type: `interface InputProps extends InputHTMLAttributes<HTMLInputElement> { label?: string; error?: string; icon?: ReactNode }`
-
-#### `card.tsx`
-- Compound component: `<Card>`, `<CardHeader>`, `<CardContent>`, `<CardFooter>`
-- Each is a `<div>` with pre-defined Tailwind classes (bg-surface, rounded-xl, shadow-card, p-6, etc.)
-- Uses `cn()` for className merging
-
-#### `skeleton.tsx`
+### Sonner — Toast System
+Add `<Toaster>` in `src/main.tsx`:
 ```tsx
-interface SkeletonProps { className?: string }
-export function Skeleton({ className }: SkeletonProps) {
-  return <div className={cn('animate-pulse rounded-md bg-gray-200 dark:bg-gray-700', className)} />
+import { Toaster } from 'sonner'
+
+createRoot(document.getElementById('root')!.render(
+  <StrictMode>
+    <Toaster richColors position="bottom-right" />
+    {/* ... */}
+  </StrictMode>,
+))
+```
+
+Usage in components:
+```tsx
+import { toast } from 'sonner'
+toast.success('Summary generated!')
+toast.error('Invalid URL')
+toast.info('Processing...')
+```
+
+### Custom Components
+
+**`src/components/ui/empty-state.tsx`** — reusable empty state:
+```tsx
+import { cn } from '@/utils/cn'
+import type { ReactNode } from 'react'
+
+interface EmptyStateProps {
+  icon: ReactNode
+  title: string
+  description?: string
+  action?: ReactNode
+  className?: string
+}
+
+export function EmptyState({ icon, title, description, action, className }: EmptyStateProps) {
+  return (
+    <div className={cn('flex flex-col items-center justify-center gap-3 py-16 text-center', className)}>
+      <div className="text-muted-foreground">{icon}</div>
+      <h3 className="text-lg font-medium">{title}</h3>
+      {description && <p className="text-sm text-muted-foreground max-w-sm">{description}</p>}
+      {action && <div className="mt-2">{action}</div>}
+    </div>
+  )
 }
 ```
 
-#### `toast.tsx`
-- `src/hooks/useToast.ts` — Context-based toast manager
-- `addToast(message, type: 'success' | 'error' | 'info')` → shows toast, auto-dismisses after 4s
-- Renders fixed bottom-right stack of toasts with icons and close button
-- Animations via framer-motion `AnimatePresence`
+**`src/components/ui/error-boundary.tsx`** — React Error Boundary:
+```tsx
+import { Component, type ReactNode, type ErrorInfo } from 'react'
 
-#### `dialog.tsx`
-- Props: `open`, `onClose`, `title`, `children`
-- Renders portal overlay with backdrop blur
-- Close on: Escape key, click outside, X button
-- Focus trap: auto-focus first focusable element on open, restore on close
-- Body scroll lock via `overflow: hidden`
-- `aria-modal="true"`, `role="dialog"`
+interface Props { children: ReactNode; fallback?: ReactNode }
+interface State { hasError: boolean; error: Error | null }
+
+export class ErrorBoundary extends Component<Props, State> {
+  state: State = { hasError: false, error: null }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error }
+  }
+
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('[ErrorBoundary]', error, info.componentStack)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return this.props.fallback ?? (
+        <div className="flex flex-col items-center justify-center gap-4 py-16">
+          <h2 className="text-xl font-semibold">Something went wrong</h2>
+          <p className="text-sm text-muted-foreground">{this.state.error?.message}</p>
+          <button
+            onClick={() => this.setState({ hasError: false, error: null })}
+            className="text-primary underline"
+          >
+            Try again
+          </button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+```
+
+**`src/components/layout/PageTransition.tsx`** — framer-motion page wrapper:
+```tsx
+import { motion } from 'framer-motion'
+import type { ReactNode } from 'react'
+
+interface Props { children: ReactNode }
+
+export function PageTransition({ children }: Props) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -12 }}
+      transition={{ duration: 0.2, ease: 'easeInOut' }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+```
 
 ## Verification
 - `pnpm lint` passes with no warnings
-- Every component renders correctly in both light and dark mode
-- Button loading state disables click and shows spinner
-- Dialog traps focus and closes on Escape
+- Sonner `<Toaster>` renders without error
+- EmptyState renders icon + title + description
+- ErrorBoundary catches thrown errors and shows fallback
+- PageTransition animates children on mount

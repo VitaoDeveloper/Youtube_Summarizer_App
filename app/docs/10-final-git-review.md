@@ -21,7 +21,7 @@ Audit every TypeScript file for:
 | Function/variable naming | camelCase (`formatDuration`, `isValidYoutubeUrl`) |
 | Constants | SCREAMING_SNAKE_CASE (`YOUTUBE_REGEX`, `MAX_HISTORY_ITEMS`) |
 | Hooks | `use` prefix (`useSummarize`, `useLocalStorage`) |
-| TypeScript | Prefer `interface` over `type` for object shapes. Use `type` for unions/aliases. |
+| TypeScript | Prefer `type` over `interface` for object shapes. `interface` only for extensible contracts. |
 | No `any` | Use `unknown` + type guards or proper generics |
 | Imports | Group: react → libraries → @/ → relative. No unused imports. |
 | Exports | Named exports for everything except pages/main entry |
@@ -30,23 +30,26 @@ Audit every TypeScript file for:
 
 ### Commit History (example sequence)
 ```bash
+# After 03-git-foundation
+git add . && git commit -m "chore(git): initialize repo with .gitignore and commit template"
+
 # After 04-theme-and-layout
 git add . && git commit -m "feat(ui): add design system tokens and responsive layout shell"
 
 # After 05-ui-components
-git add . && git commit -m "feat(ui): add reusable Button, Input, Card, Skeleton, Toast, Dialog"
+git add . && git commit -m "feat(ui): add shadcn primitives, Sonner toasts, EmptyState, ErrorBoundary"
 
 # After 06-pages-and-routing
-git add . && git commit -m "feat(pages): add router, home page, summarize page, history page"
+git add . && git commit -m "feat(pages): add router, i18n setup, home/summarize/history pages"
 
 # After 07-api-integration
-git add . && git commit -m "feat(api): add axios client, typed endpoints, React Query hooks"
+git add . && git commit -m "feat(api): add axios client, MSW mocks, typed endpoints, React Query hooks"
 
 # After 08-state-and-persistence
-git add . && git commit -m "feat(hooks): add localStorage persistence and URL validation"
+git add . && git commit -m "feat(hooks): add localStorage persistence and Zod URL validation"
 
 # After 09-ux-polish
-git add . && git commit -m "feat(ux): add page transitions, error boundary, keyboard shortcuts"
+git add . && git commit -m "feat(ux): add markdown rendering, date-fns, keyboard shortcuts, toast feedback"
 ```
 
 ### Final Sanity Check

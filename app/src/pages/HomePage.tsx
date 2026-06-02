@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sparkles, ListTree, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { PageTransition } from '@/components/layout/PageTransition'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const features = [
@@ -15,6 +16,7 @@ export function HomePage() {
   const { t } = useTranslation()
 
   return (
+    <PageTransition>
     <div className="flex flex-col items-center gap-16 py-16">
       <motion.section
         className="flex flex-col items-center gap-6 text-center"
@@ -56,5 +58,6 @@ export function HomePage() {
         ))}
       </section>
     </div>
+    </PageTransition>
   )
 }

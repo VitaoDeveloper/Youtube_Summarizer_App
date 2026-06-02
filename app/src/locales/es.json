@@ -13,6 +13,7 @@
     "inputPlaceholder": "https://youtube.com/watch?v=...",
     "submit": "Resumir",
     "submitting": "Resumiendo...",
+    "success": "¡Resumen generado con éxito!",
     "empty": "Ingresa una URL de YouTube para empezar",
     "duration": "Duración",
     "keyPoints": "Puntos Clave"

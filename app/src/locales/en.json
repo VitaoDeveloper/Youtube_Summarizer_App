@@ -13,6 +13,7 @@
     "inputPlaceholder": "https://youtube.com/watch?v=...",
     "submit": "Summarize",
     "submitting": "Summarizing...",
+    "success": "Summary generated successfully!",
     "empty": "Enter a YouTube URL to get started",
     "duration": "Duration",
     "keyPoints": "Key Points"

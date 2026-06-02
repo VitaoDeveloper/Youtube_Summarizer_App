@@ -17,8 +17,12 @@ const queryClient = new QueryClient({
 
 async function startApp() {
   if (import.meta.env.VITE_USE_MOCKS === 'true') {
-    const { worker } = await import('@/mocks/browser')
-    await worker.start()
+    try {
+      const { worker } = await import('@/mocks/browser')
+      await worker.start()
+    } catch (err) {
+      console.warn('[MSW] Failed to start', err)
+    }
   }
 
   const root = document.getElementById('root')!

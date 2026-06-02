@@ -8,7 +8,7 @@ import reactDom from 'eslint-plugin-react-dom'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'public/mockServiceWorker.js']),
   {
     files: ['src/**/*.{ts,tsx}'],
     extends: [

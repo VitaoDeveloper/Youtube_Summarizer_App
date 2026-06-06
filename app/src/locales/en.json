@@ -7,6 +7,9 @@
   "nav": {
     "summarize": "Summarize",
     "history": "History",
+    "login": "Sign in",
+    "register": "Sign up",
+    "logout": "Sign out",
     "toggleTheme": "Toggle theme",
     "toggleMenu": "Toggle menu"
   },
@@ -39,9 +42,32 @@
     "view": "View",
     "delete": "Delete summary"
   },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginDescription": "Sign in to your account",
+    "registerTitle": "Create an account",
+    "registerDescription": "Sign up to get started",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Name",
+    "namePlaceholder": "John Doe",
+    "login": "Sign in",
+    "register": "Sign up",
+    "loggingIn": "Signing in...",
+    "registering": "Creating account...",
+    "loginSuccess": "Welcome back!",
+    "registerSuccess": "Account created successfully!",
+    "logout": "Sign out",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "passwordTooShort": "Password must be at least 6 characters",
+    "passwordsDontMatch": "Passwords do not match"
+  },
   "errors": {
     "network": "Network error. Please try again.",
     "invalidUrl": "Please enter a valid YouTube URL",
+    "invalidEmail": "Please enter a valid email address",
     "required": "This field is required",
     "generic": "Something went wrong",
     "tryAgain": "Try again"

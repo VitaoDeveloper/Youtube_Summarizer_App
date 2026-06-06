@@ -1,10 +1,43 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { RouterProvider } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ThemeProvider } from 'next-themes'
+import { Toaster } from 'sonner'
+import { router } from '@/router'
+import { HistoryProvider } from '@/context/HistoryContext'
+import '@/lib/i18n'
+import '@/styles/index.css'
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: 1, staleTime: 1000 * 60 * 5, refetchOnWindowFocus: false },
+  },
+})
+
+async function startApp() {
+  if (import.meta.env.VITE_USE_MOCKS === 'true') {
+    try {
+      const { worker } = await import('@/mocks/browser')
+      await worker.start()
+    } catch (err) {
+      console.warn('[MSW] Failed to start', err)
+    }
+  }
+
+  const root = document.getElementById('root')!
+  createRoot(root).render(
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <HistoryProvider>
+            <RouterProvider router={router} />
+          </HistoryProvider>
+          <Toaster richColors position="bottom-right" />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </StrictMode>,
+  )
+}
+
+void startApp()

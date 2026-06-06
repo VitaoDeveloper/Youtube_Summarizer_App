@@ -1,73 +1,75 @@
-# React + TypeScript + Vite
+# YouTube Summarizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application that extracts concise, AI-powered summaries from YouTube videos. Built with React 19, Vite 8, and TypeScript 6.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+| Category          | Libraries                                                                 |
+| ----------------- | ------------------------------------------------------------------------- |
+| **Core**          | React 19 · Vite 8 · TypeScript 6                                         |
+| **Styling**       | Tailwind CSS v4 · shadcn/ui · clsx · Lucide React                        |
+| **Routing**       | React Router v7                                                           |
+| **State / Data**  | TanStack Query v5 · React Hook Form + Zod · Axios                        |
+| **International** | react-i18next + i18next-browser-languagedetector (en / pt / es)           |
+| **UX**            | framer-motion · Sonner toast · next-themes · react-markdown + remark-gfm  |
+| **Dev / Mock**    | MSW (Mock Service Worker) · ESLint strict · date-fns                      |
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **YouTube URL validation** — client-side validation with Zod
+- **AI summaries** — submit a YouTube link and receive a structured summary
+- **Markdown rendering** — summaries displayed as formatted markdown with GFM support
+- **History** — persisted to localStorage (up to 50 entries) with search
+- **Dark mode** — toggleable, persisted via next-themes
+- **Internationalization** — English, Portuguese (Brazil), and Spanish — auto-detected or manually switched
+- **Keyboard shortcuts** — Ctrl+Enter to submit, Escape to close dialogs
+- **Responsive layout** — hamburger menu on mobile, full nav on desktop
+- **Page transitions** — framer-motion animations between routes
+- **Mock mode** — development runs against MSW handlers by default (`VITE_USE_MOCKS=true`)
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+pnpm install
+pnpm dev          # starts Vite dev server on http://localhost:5173
+pnpm build        # TypeScript build + Vite production build
+pnpm lint         # ESLint type-aware linting
+pnpm preview      # preview production build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Variable        | Default | Description                                 |
+| --------------- | ------- | ------------------------------------------- |
+| `VITE_USE_MOCKS` | `true`  | Toggle MSW mock mode (set `false` for real API) |
+| `VITE_API_URL`   | —       | Base URL for the YouTube summary API        |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
 ```
+src/
+├── api/            # Axios client + YouTube endpoint definitions
+├── components/
+│   ├── layout/     # Header, Footer, Layout
+│   ├── ui/         # shadcn/ui primitives + LanguageSwitcher
+│   └── shared/     # EmptyState, ErrorBoundary, PageTransition, SummaryContent
+├── context/        # HistoryContext (localStorage-backed)
+├── hooks/          # useSummarize, useHistory, useLocalStorage, useMediaQuery, useKeyboard
+├── lib/            # i18n configuration
+├── locales/        # en.json, pt.json, es.json
+├── mocks/          # MSW handlers + browser worker setup
+├── pages/          # HomePage, SummarizePage, HistoryPage, NotFoundPage
+├── styles/         # Tailwind CSS v4 entry (theme tokens, dark/light variables)
+├── types/          # API response types
+└── utils/          # cn, validation, formatters, languageConfig
+```
+
+## Commit Convention
+
+This project follows [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+type(scope): short imperative summary
+```
+
+Types: `feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `style`.

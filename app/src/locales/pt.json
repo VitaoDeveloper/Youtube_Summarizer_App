@@ -1,0 +1,53 @@
+{
+  "languages": {
+    "en": "English",
+    "pt": "Portugu\u00eas",
+    "es": "Espa\u00f1ol"
+  },
+  "nav": {
+    "summarize": "Resumir",
+    "history": "Histórico",
+    "toggleTheme": "Alternar tema",
+    "toggleMenu": "Alternar menu"
+  },
+  "footer": {
+    "builtWith": "Construído com React + Vite"
+  },
+  "home": {
+    "title": "Resumidor de YouTube",
+    "subtitle": "Cole qualquer link do YouTube e obtenha um resumo conciso em segundos",
+    "cta": "Começar",
+    "feature1": "Resumos com IA",
+    "feature2": "Extração de Pontos-Chave",
+    "feature3": "Histórico de Pesquisas"
+  },
+  "summary": {
+    "title": "Resumir Vídeo",
+    "inputLabel": "URL do YouTube",
+    "inputPlaceholder": "https://youtube.com/watch?v=...",
+    "submit": "Resumir",
+    "submitting": "Resumindo...",
+    "success": "Resumo gerado com sucesso!",
+    "empty": "Insira uma URL do YouTube para começar",
+    "duration": "Duração",
+    "keyPoints": "Pontos-Chave"
+  },
+  "history": {
+    "title": "Histórico de Resumos",
+    "empty": "Nenhum resumo ainda. Vá resumir um vídeo!",
+    "searchPlaceholder": "Pesquisar por título...",
+    "view": "Visualizar",
+    "delete": "Excluir resumo"
+  },
+  "errors": {
+    "network": "Erro de rede. Tente novamente.",
+    "invalidUrl": "Insira uma URL do YouTube válida",
+    "required": "Este campo é obrigatório",
+    "generic": "Algo deu errado",
+    "tryAgain": "Tentar novamente"
+  },
+  "notFound": {
+    "title": "404 — Página não encontrada",
+    "link": "Ir para o início"
+  }
+}

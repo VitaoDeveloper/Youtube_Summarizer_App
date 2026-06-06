@@ -15,6 +15,7 @@ datasource db {
 
 model Summary {
   id         String   @id @default(uuid())
+  userId     String
   slug       String   @unique
   videoId    String
   videoTitle String
@@ -23,11 +24,13 @@ model Summary {
   language   String   @default("pt")
   length     String   @default("medium")
   createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id     String @id @default(uuid())
-  name   String
-  email  String @unique
-  apiKey String 
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  apiKey    String
+  summaries Summary[]
 }

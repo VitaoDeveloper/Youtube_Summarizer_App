@@ -1,13 +1,12 @@
+import { Summary } from "src/summary/entities/summary.entity";
+
 export class User {    
   constructor(
     public id: string,
-    public slug: string,
-    public videoId: string,
-    public videoTitle: string,
-    public summary: string,
-    public topics: string[],
-    public language: string,
-    public length: string,
+    public name: string,
+    public email: string,
+    public apiKey: string,
+    public Summaries: Summary[],
     public createdAt: Date,
   ) {}
 }

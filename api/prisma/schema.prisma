@@ -33,4 +33,5 @@ model User {
   email     String    @unique
   apiKey    String
   summaries Summary[]
+  createdAt DateTime @default(now())
 }

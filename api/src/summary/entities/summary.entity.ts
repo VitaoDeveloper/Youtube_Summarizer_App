@@ -1,6 +1,7 @@
 export class Summary {
   constructor(
     public id: string,
+    public userId: string,
     public slug: string,
     public videoId: string,
     public videoTitle: string,

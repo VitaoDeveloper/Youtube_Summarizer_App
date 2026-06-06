@@ -8,9 +8,10 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
+    UserModule,
     SummaryModule, 
     LlmModule, 
-    PrismaModule, UserModule
+    PrismaModule 
   ],
   controllers: [AppController],
   providers: [AppService],

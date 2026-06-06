@@ -1,1 +1,13 @@
-export class Summary {}
+export class Summary {
+    constructor(
+    public id: string,
+    public slug: string,
+    public videoId: string,
+    public videoTitle: string,
+    public summary: string,
+    public topics: string[],
+    public language: string,
+    public length: string,
+    public createdAt: Date,
+  ) {}
+}

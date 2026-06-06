@@ -1,4 +1,4 @@
-export class Summary {
+export class User {    
   constructor(
     public id: string,
     public slug: string,

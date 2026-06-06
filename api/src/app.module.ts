@@ -4,12 +4,13 @@ import { AppService } from './app.service';
 import { SummaryModule } from './summary/summary.module';
 import { LlmModule } from './llm/llm.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     SummaryModule, 
     LlmModule, 
-    PrismaModule
+    PrismaModule, UserModule
   ],
   controllers: [AppController],
   providers: [AppService],

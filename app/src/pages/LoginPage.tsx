@@ -38,17 +38,20 @@ export function LoginPage() {
 
   const onSubmit = (data: FormData) => {
     setIsSubmitting(true)
-    void (async () => {
+
+    const submit = async () => {
       try {
         await login(data)
         toast.success(t('auth.loginSuccess'))
-        navigate(from, { replace: true })
+        void navigate(from, { replace: true })
       } catch (err) {
         toast.error(err instanceof Error ? err.message : t('errors.generic'))
       } finally {
         setIsSubmitting(false)
       }
-    })()
+    }
+
+    void submit()
   }
 
   return (

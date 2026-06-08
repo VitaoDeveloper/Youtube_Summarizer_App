@@ -40,17 +40,20 @@ export function RegisterPage() {
 
   const onSubmit = (data: FormData) => {
     setIsSubmitting(true)
-    void (async () => {
+
+    const submit = async () => {
       try {
         await registerUser({ name: data.name, email: data.email, password: data.password })
         toast.success(t('auth.registerSuccess'))
-        navigate('/', { replace: true })
+        void navigate('/', { replace: true })
       } catch (err) {
         toast.error(err instanceof Error ? err.message : t('errors.generic'))
       } finally {
         setIsSubmitting(false)
       }
-    })()
+    }
+
+    void submit()
   }
 
   return (

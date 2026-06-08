@@ -5,10 +5,12 @@ import { SummaryModule } from './summary/summary.module';
 import { LlmModule } from './llm/llm.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UserModule,
+    AuthModule,
     SummaryModule, 
     LlmModule, 
     PrismaModule 

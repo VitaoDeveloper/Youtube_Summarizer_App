@@ -13,5 +13,6 @@ async function bootstrap(): Promise<void> {
   app.init()
 
   console.log(`Application running on: http://localhost:${port}`);
+  console.log(`Swagger can be accessed on: http://localhost:${port}/docs`);
 }
 bootstrap();

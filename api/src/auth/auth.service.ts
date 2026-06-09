@@ -3,42 +3,44 @@ import { AuthLoginDto } from './dto/auth-login.dto';
 import { PrismaService } from '../common/modules/prisma/prisma.service';
 import { HashService } from 'src/common/modules/hash/hash.service';
 import { User } from 'generated/prisma/client';
+import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor (
     private prisma: PrismaService,
-    private validation: HashService
+    private validation: HashService,
+    private jwt: JwtService
   ) {}
 
-  private async userExists(email: string): Promise<{ exists: boolean, hash: string | null }> {
-    const hash = await this.prisma.user.findUnique({ 
-      where: { email },
-      select: { password: true } 
+  private async userExists(email: string): Promise<{ exists: boolean, user: User | null }> {
+    const user = await this.prisma.user.findUnique({ 
+      where: { email } 
     });
 
-    const exists = hash ? true : false;
+    const exists = user ? true : false;
 
     return {
       exists,
-      hash: hash?.password!
+      user
     };
   }
 
   async login(dto: AuthLoginDto) {
-    const user = await this.userExists(dto.email);
+    const { exists, user } = await this.userExists(dto.email);
     
-    if (user.exists) {
-      const access = await this.validation.verify(user.hash! ,dto.password);
+    if (exists) {
+      const access = await this.validation.verify(user!.password ,dto.password);
 
-      const token = access ? "access_token" : undefined;
+      const payload = { sub: user!.id, email: user!.email }
+      const token = access ? this.jwt.sign(payload) : undefined;
 
       return {
         access,
-        token: token
+        token
       };
     }
 
-    return user;
+    return { exists };
   }
 }

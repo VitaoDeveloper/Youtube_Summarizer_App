@@ -14,7 +14,7 @@ import { HashService } from './common/modules/hash/hash.service';
     UserModule,
     AuthModule,
     SummaryModule,
-    HashModule, 
+    HashModule,
     LlmModule, 
     PrismaModule 
   ],

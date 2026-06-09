@@ -11,7 +11,7 @@ export class AuthService {
     private validation: HashService
   ) {}
 
-  private async userExists(email: string): Promise<{ exists: boolean, hash: Partial<User> | null }> {
+  private async userExists(email: string): Promise<{ exists: boolean, hash: string | null }> {
     const hash = await this.prisma.user.findUnique({ 
       where: { email },
       select: { password: true } 
@@ -21,17 +21,24 @@ export class AuthService {
 
     return {
       exists,
-      hash
+      hash: hash?.password!
     };
   }
 
   async login(dto: AuthLoginDto) {
-    //const user: boolean = await this.userExists(dto.email) ? true : false;
+    const user = await this.userExists(dto.email);
+    
+    if (user.exists) {
+      const access = await this.validation.verify(user.hash! ,dto.password);
 
-    if (1==1) {
-      //const validate = this.validation.verify(, dto.password) 
+      const token = access ? "access_token" : undefined;
+
+      return {
+        access,
+        token: token
+      };
     }
 
-    return "user";
+    return user;
   }
 }

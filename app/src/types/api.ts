@@ -23,6 +23,28 @@ export type ApiError = {
   status: number
 }
 
+export type User = {
+  id: string
+  name: string
+  email: string
+}
+
+export type AuthResponse = {
+  user: User
+  token: string
+}
+
+export type LoginDto = {
+  email: string
+  password: string
+}
+
+export type RegisterDto = {
+  name: string
+  email: string
+  password: string
+}
+
 export type PaginatedResponse<T> = {
   data: T[]
   total: number

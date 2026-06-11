@@ -7,6 +7,9 @@
   "nav": {
     "summarize": "Resumir",
     "history": "Historial",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "logout": "Cerrar sesión",
     "toggleTheme": "Cambiar tema",
     "toggleMenu": "Cambiar menú"
   },
@@ -39,9 +42,32 @@
     "view": "Ver",
     "delete": "Eliminar resumen"
   },
+  "auth": {
+    "loginTitle": "Bienvenido de nuevo",
+    "loginDescription": "Inicia sesión en tu cuenta",
+    "registerTitle": "Crear una cuenta",
+    "registerDescription": "Regístrate para empezar",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "name": "Nombre",
+    "namePlaceholder": "Juan Pérez",
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "loggingIn": "Iniciando sesión...",
+    "registering": "Creando cuenta...",
+    "loginSuccess": "¡Bienvenido de nuevo!",
+    "registerSuccess": "¡Cuenta creada con éxito!",
+    "logout": "Cerrar sesión",
+    "noAccount": "¿No tienes una cuenta?",
+    "hasAccount": "¿Ya tienes una cuenta?",
+    "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "passwordsDontMatch": "Las contraseñas no coinciden"
+  },
   "errors": {
     "network": "Error de red. Inténtalo de nuevo.",
     "invalidUrl": "Ingresa una URL de YouTube válida",
+    "invalidEmail": "Ingresa un correo electrónico válido",
     "required": "Este campo es obligatorio",
     "generic": "Algo salió mal",
     "tryAgain": "Intentar de nuevo"

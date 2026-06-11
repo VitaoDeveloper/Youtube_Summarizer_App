@@ -7,6 +7,17 @@ const apiClient = axios.create({
   headers: { 'Content-Type': 'application/json' },
 })
 
+apiClient.interceptors.request.use(config => {
+  const token = localStorage.getItem('auth_token')
+  if (token) {
+    const parsed = JSON.parse(token) as string | null
+    if (parsed) {
+      config.headers.Authorization = `Bearer ${parsed}`
+    }
+  }
+  return config
+})
+
 apiClient.interceptors.response.use(
   response => response,
   (error: unknown) => {

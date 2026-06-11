@@ -1,11 +1,14 @@
 export type SummaryResponse = {
   id: string
+  slug: string
+  userId: string
   videoId: string
-  title: string
+  videoTitle: string
   thumbnail: string
   summary: string
-  keyPoints: string[]
-  duration: number
+  language: string
+  topics: string[]
+  length: number
   createdAt: string
 }
 
@@ -23,6 +26,16 @@ export type ApiError = {
   status: number
 }
 
+export type UserResponse = {
+  id: string
+  name: string
+  email: string
+  password: string
+  apiKey: string
+  createdAt: string
+  //summaries: SummaryResponse[]
+}
+
 export type User = {
   id: string
   name: string
@@ -30,8 +43,8 @@ export type User = {
 }
 
 export type AuthResponse = {
-  user: User
-  token: string
+  access: boolean
+  token?: string
 }
 
 export type LoginDto = {
@@ -43,6 +56,7 @@ export type RegisterDto = {
   name: string
   email: string
   password: string
+  apiKey: string
 }
 
 export type PaginatedResponse<T> = {

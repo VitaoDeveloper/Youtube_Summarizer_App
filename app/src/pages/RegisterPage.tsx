@@ -15,6 +15,7 @@ import { UserPlus } from 'lucide-react'
 const schema = z.object({
   name: z.string().min(1, 'errors.required'),
   email: z.string().min(1, 'errors.required').email('errors.invalidEmail'),
+  apiKey: z.string().min(1, 'errors.required'),
   password: z.string().min(6, 'auth.passwordTooShort'),
   confirmPassword: z.string().min(1, 'errors.required'),
 }).refine(data => data.password === data.confirmPassword, {
@@ -43,7 +44,7 @@ export function RegisterPage() {
 
     const submit = async () => {
       try {
-        await registerUser({ name: data.name, email: data.email, password: data.password })
+        await registerUser({ name: data.name, email: data.email, password: data.password, apiKey: data.apiKey })
         toast.success(t('auth.registerSuccess'))
         void navigate('/', { replace: true })
       } catch (err) {
@@ -101,6 +102,25 @@ export function RegisterPage() {
                 {errors.email && (
                   <p id="email-error" className="mt-1 text-sm text-destructive">
                     {t(errors.email.message as string)}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="apiKey" className="mb-2 block text-sm font-medium">
+                  {t('auth.apiKey')}
+                </label>
+                <Input
+                  id="apiKey"
+                  type="text"
+                  placeholder={t('auth.apiKeyPlaceholder')}
+                  autoComplete="name"
+                  aria-invalid={!!errors.apiKey}
+                  aria-describedby={errors.apiKey ? 'apiKey-error' : undefined}
+                  {...register('apiKey')}
+                />
+                {errors.name && (
+                  <p id="name-error" className="mt-1 text-sm text-destructive">
+                    {t(errors.name.message as string)}
                   </p>
                 )}
               </div>

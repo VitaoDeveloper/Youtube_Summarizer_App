@@ -53,6 +53,8 @@
     "name": "Nombre",
     "namePlaceholder": "Juan Pérez",
     "login": "Iniciar sesión",
+    "apiKey": "Clave de API",
+    "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
     "register": "Registrarse",
     "loggingIn": "Iniciando sesión...",
     "registering": "Creando cuenta...",

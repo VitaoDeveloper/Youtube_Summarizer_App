@@ -51,6 +51,8 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "name": "Name",
+    "apiKey": "API key",
+    "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
     "namePlaceholder": "John Doe",
     "login": "Sign in",
     "register": "Sign up",

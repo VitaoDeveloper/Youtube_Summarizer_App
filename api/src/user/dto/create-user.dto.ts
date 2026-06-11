@@ -20,6 +20,14 @@ export class CreateUserDto {
     email: string;
 
     @ApiProperty({
+        description: 'User password',
+        format: 'password',
+        example: '••••••••••'
+    })
+    @IsString()
+    password: string;
+
+    @ApiProperty({
         description: 'User LLM API Key',
         example: 'llmy_qWlfaBRSWG65fsRvVLVHf6JxnjOnHu6UqpFS45fyUcuVk7OSEyl7yo6H',
         maxLength: 80,

@@ -2,18 +2,23 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { SummaryModule } from './summary/summary.module';
-import { LlmModule } from './llm/llm.module';
-import { PrismaModule } from './prisma/prisma.module';
+import { LlmModule } from './common/modules/llm/llm.module';
+import { PrismaModule } from './common/modules/prisma/prisma.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { HashModule } from './common/modules/hash/hash.module';
+import { HashService } from './common/modules/hash/hash.service';
 
 @Module({
   imports: [
     UserModule,
-    SummaryModule, 
+    AuthModule,
+    SummaryModule,
+    HashModule,
     LlmModule, 
     PrismaModule 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, HashService],
 })
 export class AppModule {}

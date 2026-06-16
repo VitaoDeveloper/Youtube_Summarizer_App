@@ -53,6 +53,8 @@
     "name": "Name",
     "apiKey": "API key",
     "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
+    "aiProvider": "AI Provider",
+    "aiProviderPlaceholder": "Select a provider",
     "namePlaceholder": "John Doe",
     "login": "Sign in",
     "register": "Sign up",
@@ -65,6 +67,11 @@
     "hasAccount": "Already have an account?",
     "passwordTooShort": "Password must be at least 6 characters",
     "passwordsDontMatch": "Passwords do not match"
+  },
+  "providers": {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic",
+    "google": "Google"
   },
   "errors": {
     "network": "Network error. Please try again.",

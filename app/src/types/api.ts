@@ -26,12 +26,15 @@ export type ApiError = {
   status: number
 }
 
+export type AiProvider = 'openai' | 'anthropic' | 'google'
+
 export type UserResponse = {
   id: string
   name: string
   email: string
   password: string
   apiKey: string
+  aiProvider: AiProvider
   createdAt: string
   //summaries: SummaryResponse[]
 }
@@ -57,6 +60,7 @@ export type RegisterDto = {
   email: string
   password: string
   apiKey: string
+  aiProvider: string
 }
 
 export type PaginatedResponse<T> = {

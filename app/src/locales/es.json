@@ -55,6 +55,8 @@
     "login": "Iniciar sesión",
     "apiKey": "Clave de API",
     "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
+    "aiProvider": "Proveedor de IA",
+    "aiProviderPlaceholder": "Seleccione un proveedor",
     "register": "Registrarse",
     "loggingIn": "Iniciando sesión...",
     "registering": "Creando cuenta...",
@@ -65,6 +67,11 @@
     "hasAccount": "¿Ya tienes una cuenta?",
     "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
     "passwordsDontMatch": "Las contraseñas no coinciden"
+  },
+  "providers": {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic",
+    "google": "Google"
   },
   "errors": {
     "network": "Error de red. Inténtalo de nuevo.",

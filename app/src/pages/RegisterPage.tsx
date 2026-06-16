@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
@@ -6,35 +6,68 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { useAuth } from '@/context/AuthContext'
+import { getProviders } from '@/api/llm'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { UserPlus } from 'lucide-react'
 
-const schema = z.object({
-  name: z.string().min(1, 'errors.required'),
-  email: z.string().min(1, 'errors.required').email('errors.invalidEmail'),
-  apiKey: z.string().min(1, 'errors.required'),
-  password: z.string().min(6, 'auth.passwordTooShort'),
-  confirmPassword: z.string().min(1, 'errors.required'),
-}).refine(data => data.password === data.confirmPassword, {
-  message: 'auth.passwordsDontMatch',
-  path: ['confirmPassword'],
-})
+type FormData = {
+  name: string
+  email: string
+  apiKey: string
+  aiProvider: string
+  password: string
+  confirmPassword: string
+}
 
-type FormData = z.infer<typeof schema>
+function createSchema(providers: string[]) {
+  return z.object({
+    name: z.string().min(1, 'errors.required'),
+    email: z.string().min(1, 'errors.required').email('errors.invalidEmail'),
+    apiKey: z.string().min(1, 'errors.required'),
+    aiProvider: z.enum(providers as [string, ...string[]], {
+      message: 'errors.required',
+    }),
+    password: z.string().min(6, 'auth.passwordTooShort'),
+    confirmPassword: z.string().min(1, 'errors.required'),
+  }).refine(data => data.password === data.confirmPassword, {
+    message: 'auth.passwordsDontMatch',
+    path: ['confirmPassword'],
+  })
+}
+
+const FALLBACK_PROVIDERS = ['openai', 'anthropic', 'google']
 
 export function RegisterPage() {
   const { t } = useTranslation()
   const { register: registerUser } = useAuth()
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [providers, setProviders] = useState<string[]>([])
+
+  useEffect(() => {
+    getProviders().then(setProviders).catch(() => {})
+  }, [])
+
+  const schema = useMemo(
+    () => createSchema(providers.length > 0 ? providers : FALLBACK_PROVIDERS),
+    [providers],
+  )
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
   })
@@ -44,7 +77,13 @@ export function RegisterPage() {
 
     const submit = async () => {
       try {
-        await registerUser({ name: data.name, email: data.email, password: data.password, apiKey: data.apiKey })
+        await registerUser({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          apiKey: data.apiKey,
+          aiProvider: data.aiProvider,
+        })
         toast.success(t('auth.registerSuccess'))
         void navigate('/', { replace: true })
       } catch (err) {
@@ -113,14 +152,44 @@ export function RegisterPage() {
                   id="apiKey"
                   type="text"
                   placeholder={t('auth.apiKeyPlaceholder')}
-                  autoComplete="name"
+                  autoComplete="off"
                   aria-invalid={!!errors.apiKey}
                   aria-describedby={errors.apiKey ? 'apiKey-error' : undefined}
                   {...register('apiKey')}
                 />
-                {errors.name && (
-                  <p id="name-error" className="mt-1 text-sm text-destructive">
-                    {t(errors.name.message as string)}
+                {errors.apiKey && (
+                  <p id="apiKey-error" className="mt-1 text-sm text-destructive">
+                    {t(errors.apiKey.message as string)}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label htmlFor="aiProvider" className="mb-2 block text-sm font-medium">
+                  {t('auth.aiProvider')}
+                </label>
+                <Select
+                  onValueChange={(value) => setValue('aiProvider', value)}
+                >
+                  <SelectTrigger id="aiProvider" aria-invalid={!!errors.aiProvider}>
+                    <SelectValue placeholder={t('auth.aiProviderPlaceholder')} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {providers.length === 0
+                      ? FALLBACK_PROVIDERS.map((provider) => (
+                          <SelectItem key={provider} value={provider}>
+                            {t(`providers.${provider}`)}
+                          </SelectItem>
+                        ))
+                      : providers.map((provider) => (
+                          <SelectItem key={provider} value={provider}>
+                            {t(`providers.${provider}`)}
+                          </SelectItem>
+                        ))}
+                  </SelectContent>
+                </Select>
+                {errors.aiProvider && (
+                  <p id="aiProvider-error" className="mt-1 text-sm text-destructive">
+                    {t(errors.aiProvider.message as string)}
                   </p>
                 )}
               </div>

@@ -13,6 +13,12 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Provider {
+  OpenAI
+  Anthropic
+  Google
+}
+
 model Summary {
   id         String   @id @default(uuid())
   userId     String
@@ -28,11 +34,12 @@ model Summary {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  password  String
-  apiKey    String
-  summaries Summary[]
-  createdAt DateTime @default(now())
+  id          String    @id @default(uuid())
+  name        String
+  email       String    @unique
+  password    String
+  llmProvider Provider
+  apiKey      String
+  summaries   Summary[]
+  createdAt   DateTime @default(now())
 }

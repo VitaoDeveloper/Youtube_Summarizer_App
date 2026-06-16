@@ -19,7 +19,7 @@ import { LlmController } from './common/modules/llm/llm.controller';
     LlmModule, 
     PrismaModule 
   ],
-  controllers: [AppController, LlmController],
-  providers: [AppService, HashService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

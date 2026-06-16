@@ -20,15 +20,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { PageTransition } from '@/components/layout/PageTransition'
 import { UserPlus } from 'lucide-react'
 
-type FormData = {
-  name: string
-  email: string
-  apiKey: string
-  aiProvider: string
-  password: string
-  confirmPassword: string
-}
-
 function createSchema(providers: string[]) {
   return z.object({
     name: z.string().min(1, 'errors.required'),
@@ -45,6 +36,7 @@ function createSchema(providers: string[]) {
   })
 }
 
+
 const FALLBACK_PROVIDERS = ['openai', 'anthropic', 'google']
 
 export function RegisterPage() {
@@ -53,15 +45,17 @@ export function RegisterPage() {
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [providers, setProviders] = useState<string[]>([])
-
+  
   useEffect(() => {
     getProviders().then(setProviders).catch(() => {})
   }, [])
-
+  
   const schema = useMemo(
     () => createSchema(providers.length > 0 ? providers : FALLBACK_PROVIDERS),
     [providers],
   )
+  
+  type FormData = z.infer<typeof schema>
 
   const {
     register,

@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HashModule } from './common/modules/hash/hash.module';
 import { HashService } from './common/modules/hash/hash.service';
+import { LlmController } from './common/modules/llm/llm.controller';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { HashService } from './common/modules/hash/hash.service';
     PrismaModule 
   ],
   controllers: [AppController],
-  providers: [AppService, HashService],
+  providers: [AppService],
 })
 export class AppModule {}

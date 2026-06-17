@@ -95,7 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(
     async (dto: LoginDto) => {
       const res = await apiLogin(dto)
-      setToken(res.token)
+      setToken(res.token ?? null)
 
       const claims = jwtDecode<{ sub: string }>(res.token!)
       const user = await getMe(claims.sub)
@@ -107,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = useCallback(
     async (dto: RegisterDto) => {
       const res = await apiRegister(dto)
-      setToken(res.token)
+      setToken(res.token ?? null)
       dispatch({
         type: 'SIGN_IN',
         user: { id: res.id, name: res.name, email: res.email },

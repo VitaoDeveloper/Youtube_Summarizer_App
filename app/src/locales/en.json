@@ -40,7 +40,8 @@
     "empty": "No summaries yet. Go summarize a video!",
     "searchPlaceholder": "Search by title...",
     "view": "View",
-    "delete": "Delete summary"
+    "delete": "Delete summary",
+    "deleteSuccess": "Summary deleted successfully"
   },
   "auth": {
     "loginTitle": "Welcome back",

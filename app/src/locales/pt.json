@@ -40,7 +40,8 @@
     "empty": "Nenhum resumo ainda. Vá resumir um vídeo!",
     "searchPlaceholder": "Pesquisar por título...",
     "view": "Visualizar",
-    "delete": "Excluir resumo"
+    "delete": "Excluir resumo",
+    "deleteSuccess": "Resumo excluído com sucesso"
   },
   "auth": {
     "loginTitle": "Bem-vindo de volta",

@@ -21,7 +21,7 @@ export function HistoryPage() {
 
   const handleDelete = (id: string) => {
     deleteSummary.mutate(id, {
-      onSuccess: () => toast.success(t('errors.generic')),
+      onSuccess: () => toast.success(t('history.deleteSuccess')),
       onError: () => toast.error(t('errors.network')),
     })
   }

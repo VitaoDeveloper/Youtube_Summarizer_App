@@ -25,7 +25,7 @@ function createSchema(providers: string[]) {
     name: z.string().min(1, 'errors.required'),
     email: z.string().min(1, 'errors.required').email('errors.invalidEmail'),
     apiKey: z.string().min(1, 'errors.required'),
-    aiProvider: z.enum(providers as [string, ...string[]], {
+    llmProvider: z.enum(providers as [string, ...string[]], {
       message: 'errors.required',
     }),
     password: z.string().min(6, 'auth.passwordTooShort'),
@@ -76,7 +76,7 @@ export function RegisterPage() {
           email: data.email,
           password: data.password,
           apiKey: data.apiKey,
-          aiProvider: data.aiProvider,
+          llmProvider: data.llmProvider,
         })
         toast.success(t('auth.registerSuccess'))
         void navigate('/', { replace: true })
@@ -158,32 +158,32 @@ export function RegisterPage() {
                 )}
               </div>
               <div>
-                <label htmlFor="aiProvider" className="mb-2 block text-sm font-medium">
-                  {t('auth.aiProvider')}
+                <label htmlFor="llmProvider" className="mb-2 block text-sm font-medium">
+                  {t('auth.llmProvider')}
                 </label>
                 <Select
-                  onValueChange={(value) => setValue('aiProvider', value)}
+                  onValueChange={(value) => setValue('llmProvider', value)}
                 >
-                  <SelectTrigger id="aiProvider" aria-invalid={!!errors.aiProvider}>
-                    <SelectValue placeholder={t('auth.aiProviderPlaceholder')} />
+                  <SelectTrigger id="llmProvider" aria-invalid={!!errors.llmProvider}>
+                    <SelectValue placeholder={t('auth.llmProviderPlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
                     {providers.length === 0
                       ? FALLBACK_PROVIDERS.map((provider) => (
                           <SelectItem key={provider} value={provider}>
-                            {t(`providers.${provider}`)}
+                            {t(`providers.${provider.toLowerCase()}`)}
                           </SelectItem>
                         ))
                       : providers.map((provider) => (
                           <SelectItem key={provider} value={provider}>
-                            {t(`providers.${provider}`)}
+                            {t(`providers.${provider.toLowerCase()}`)}
                           </SelectItem>
                         ))}
                   </SelectContent>
                 </Select>
-                {errors.aiProvider && (
-                  <p id="aiProvider-error" className="mt-1 text-sm text-destructive">
-                    {t(errors.aiProvider.message as string)}
+                {errors.llmProvider && (
+                  <p id="llmProvider-error" className="mt-1 text-sm text-destructive">
+                    {t(errors.llmProvider.message as string)}
                   </p>
                 )}
               </div>

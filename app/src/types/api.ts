@@ -34,7 +34,7 @@ export type UserResponse = {
   email: string
   password: string
   apiKey: string
-  aiProvider: AiProvider
+  llmProvider: AiProvider
   createdAt: string
   summaries: SummaryResponse[]
 }
@@ -53,7 +53,7 @@ export type RegisterResponse = {
   email: string
   password: string
   apiKey: string
-  aiProvider: AiProvider
+  llmProvider: AiProvider
   createdAt: string
   summaries: SummaryResponse[]
 }
@@ -73,7 +73,7 @@ export type RegisterDto = {
   email: string
   password: string
   apiKey: string
-  aiProvider: string
+  llmProvider: string
 }
 
 export type PaginatedResponse<T> = {

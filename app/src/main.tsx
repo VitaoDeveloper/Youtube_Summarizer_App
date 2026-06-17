@@ -16,31 +16,18 @@ const queryClient = new QueryClient({
   },
 })
 
-async function startApp() {
-  if (import.meta.env.VITE_USE_MOCKS === 'true') {
-    try {
-      const { worker } = await import('@/mocks/browser')
-      await worker.start()
-    } catch (err) {
-      console.warn('[MSW] Failed to start', err)
-    }
-  }
-
-  const root = document.getElementById('root')!
-  createRoot(root).render(
-    <StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <AuthProvider>
-            <HistoryProvider>
-              <RouterProvider router={router} />
-            </HistoryProvider>
-          </AuthProvider>
-          <Toaster richColors position="bottom-right" />
-        </ThemeProvider>
-      </QueryClientProvider>
-    </StrictMode>,
-  )
-}
-
-void startApp()
+const root = document.getElementById('root')!
+createRoot(root).render(
+  <StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <AuthProvider>
+          <HistoryProvider>
+            <RouterProvider router={router} />
+          </HistoryProvider>
+        </AuthProvider>
+        <Toaster richColors position="bottom-right" />
+      </ThemeProvider>
+    </QueryClientProvider>
+  </StrictMode>,
+)

@@ -36,13 +36,26 @@ export type UserResponse = {
   apiKey: string
   aiProvider: AiProvider
   createdAt: string
-  //summaries: SummaryResponse[]
+  summaries: SummaryResponse[]
 }
 
 export type User = {
   id: string
   name: string
   email: string
+}
+
+export type RegisterResponse = {
+  access: boolean
+  token?: string
+  id: string
+  name: string
+  email: string
+  password: string
+  apiKey: string
+  aiProvider: AiProvider
+  createdAt: string
+  summaries: SummaryResponse[]
 }
 
 export type AuthResponse = {

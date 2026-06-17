@@ -106,13 +106,13 @@ export function SummarizePage() {
                 <div className="flex items-center gap-4">
                   <img
                     src={summarize.data.thumbnail}
-                    alt={summarize.data.title}
+                    alt={summarize.data.videoTitle}
                     className="h-20 w-32 rounded object-cover"
                   />
                   <div>
-                    <h3 className="font-semibold">{summarize.data.title}</h3>
+                    <h3 className="font-semibold">{summarize.data.videoTitle}</h3>
                     <p className="text-sm text-muted-foreground">
-                      {t('summary.duration')}: {formatDuration(summarize.data.duration)}
+                      {t('summary.duration')}: {formatDuration(summarize.data.length)}
                     </p>
                   </div>
                 </div>
@@ -120,8 +120,8 @@ export function SummarizePage() {
                 <div>
                   <h4 className="mb-2 font-medium">{t('summary.keyPoints')}</h4>
                   <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-                    {summarize.data.keyPoints.map((point) => (
-                      <li key={point}>{point}</li>
+                    {summarize.data.topics.map((topic) => (
+                      <li key={topic}>{topic}</li>
                     ))}
                   </ul>
                 </div>

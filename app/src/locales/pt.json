@@ -40,7 +40,8 @@
     "empty": "Nenhum resumo ainda. Vá resumir um vídeo!",
     "searchPlaceholder": "Pesquisar por título...",
     "view": "Visualizar",
-    "delete": "Excluir resumo"
+    "delete": "Excluir resumo",
+    "deleteSuccess": "Resumo excluído com sucesso"
   },
   "auth": {
     "loginTitle": "Bem-vindo de volta",
@@ -52,6 +53,10 @@
     "confirmPassword": "Confirmar Senha",
     "name": "Nome",
     "namePlaceholder": "João Silva",
+    "apiKey": "Chave de API",
+    "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
+    "llmProvider": "Provedor de IA",
+    "llmProviderPlaceholder": "Selecione um provedor",
     "login": "Entrar",
     "register": "Cadastrar",
     "loggingIn": "Entrando...",
@@ -63,6 +68,11 @@
     "hasAccount": "Já tem uma conta?",
     "passwordTooShort": "A senha deve ter pelo menos 6 caracteres",
     "passwordsDontMatch": "As senhas não conferem"
+  },
+  "providers": {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic",
+    "google": "Google"
   },
   "errors": {
     "network": "Erro de rede. Tente novamente.",

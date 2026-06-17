@@ -1,10 +1,15 @@
 import axios from 'axios'
 import i18n from '@/lib/i18n'
 
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL as string | undefined,
+export const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 30000,
-  headers: { 'Content-Type': 'application/json' },
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  params: {
+    'x-vercel-protection-bypass': import.meta.env.VITE_VERCEL_BYPASS_TOKEN,
+  },
 })
 
 apiClient.interceptors.request.use(config => {
@@ -26,5 +31,3 @@ apiClient.interceptors.response.use(
     return Promise.reject(new Error(message))
   },
 )
-
-export { apiClient }

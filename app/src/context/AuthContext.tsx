@@ -1,4 +1,5 @@
 import { createContext, use, useCallback, useEffect, useReducer, type ReactNode } from 'react'
+import { jwtDecode } from 'jwt-decode'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { login as apiLogin, register as apiRegister, getMe, logout as apiLogout } from '@/api/auth'
 import type { User, LoginDto, RegisterDto } from '@/types/api'
@@ -58,8 +59,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let cancelled = false
+    let userId: string | null = null
 
-    getMe()
+    try {
+      const claims = jwtDecode<{ sub: string }>(token)
+      userId = claims.sub
+    } catch {
+      setToken(null)
+      dispatch({ type: 'SESSION_FAILED' })
+      return
+    }
+
+    if (!userId) {
+      setToken(null)
+      dispatch({ type: 'SESSION_FAILED' })
+      return
+    }
+
+    getMe(userId)
       .then(fetchedUser => {
         if (!cancelled) dispatch({ type: 'SESSION_LOADED', user: fetchedUser })
       })
@@ -78,8 +95,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = useCallback(
     async (dto: LoginDto) => {
       const res = await apiLogin(dto)
-      setToken(res.token)
-      dispatch({ type: 'SIGN_IN', user: res.user })
+      setToken(res.token ?? null)
+
+      const claims = jwtDecode<{ sub: string }>(res.token!)
+      const user = await getMe(claims.sub)
+      dispatch({ type: 'SIGN_IN', user })
     },
     [setToken],
   )
@@ -87,8 +107,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = useCallback(
     async (dto: RegisterDto) => {
       const res = await apiRegister(dto)
-      setToken(res.token)
-      dispatch({ type: 'SIGN_IN', user: res.user })
+      setToken(res.token ?? null)
+      dispatch({
+        type: 'SIGN_IN',
+        user: { id: res.id, name: res.name, email: res.email },
+      })
     },
     [setToken],
   )

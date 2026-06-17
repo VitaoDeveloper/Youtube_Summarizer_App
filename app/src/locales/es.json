@@ -40,7 +40,8 @@
     "empty": "Aún no hay resúmenes. ¡Ve a resumir un video!",
     "searchPlaceholder": "Buscar por título...",
     "view": "Ver",
-    "delete": "Eliminar resumen"
+    "delete": "Eliminar resumen",
+    "deleteSuccess": "Resumen eliminado con éxito"
   },
   "auth": {
     "loginTitle": "Bienvenido de nuevo",
@@ -53,6 +54,10 @@
     "name": "Nombre",
     "namePlaceholder": "Juan Pérez",
     "login": "Iniciar sesión",
+    "apiKey": "Clave de API",
+    "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
+    "llmProvider": "Proveedor de IA",
+    "llmProviderPlaceholder": "Seleccione un proveedor",
     "register": "Registrarse",
     "loggingIn": "Iniciando sesión...",
     "registering": "Creando cuenta...",
@@ -63,6 +68,11 @@
     "hasAccount": "¿Ya tienes una cuenta?",
     "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
     "passwordsDontMatch": "Las contraseñas no coinciden"
+  },
+  "providers": {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic",
+    "google": "Google"
   },
   "errors": {
     "network": "Error de red. Inténtalo de nuevo.",

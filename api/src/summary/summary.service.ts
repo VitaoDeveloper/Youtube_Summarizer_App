@@ -1,10 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSummaryDto } from './dto/create-summary.dto';
+import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { LlmService } from 'src/common/modules/llm/llm.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class SummaryService {
-  create(createSummaryDto: CreateSummaryDto) {
-    return 'This action adds a new summary';
+  constructor (
+    private prisma: PrismaService,
+    private user: UserService, 
+    private llm: LlmService, 
+  ) {}
+  
+  async create(dto: CreateSummaryDto) {
+    const userData = await this.user.findOne(dto.userId);
+    const llmClient = userData 
+      ? this.llm.createClient(userData.apiKey, userData.llmProvider) 
+      : 'No user found.'
+
+    return llmClient;
   }
 
   findAll() {

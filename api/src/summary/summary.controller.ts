@@ -18,11 +18,11 @@ export class SummaryController {
 
   @Get(':slug')
   findOne(@Param('slug') slug: string) {
-    return this.summaryService.findOne(+slug);
+    return this.summaryService.findOne(slug);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.summaryService.remove(+id);
+  @Delete(':slug')
+  remove(@Param('slug') slug: string) {
+    return this.summaryService.remove(slug);
   }
 }

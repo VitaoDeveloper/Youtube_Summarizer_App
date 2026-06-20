@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpExceptionBody, Injectable } from '@nestjs/common';
 import { CreateSummaryDto } from './dto/create-summary.dto';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
 import { LlmService } from 'src/common/modules/llm/llm.service';
 import { UserService } from 'src/user/user.service';
+import { LanguageModel } from 'ai';
 
 @Injectable()
 export class SummaryService {
@@ -12,13 +13,27 @@ export class SummaryService {
     private llm: LlmService, 
   ) {}
   
-  async create(dto: CreateSummaryDto) {
+  async create(dto: CreateSummaryDto): Promise<LanguageModel | HttpExceptionBody|any> {
     const userData = await this.user.findOne(dto.userId);
-    const llmClient = userData 
-      ? this.llm.createClient(userData.apiKey, userData.llmProvider) 
-      : 'No user found.'
 
-    return llmClient;
+    if (!userData) return { 
+      statusCode: 400,
+      message: 'No user found.' 
+    } 
+
+    const llmClient = await this.llm.createClient(userData.apiKey, userData.llmProvider);
+    const summary = await this.llm.generateSummary(llmClient, dto);
+
+    return await this.prisma.summary.create({
+      data: {
+        topics: ['', ''],
+        videoTitle: '',
+        videoId: '',
+        slug: 'slug',
+        summary,
+        ...dto,
+      }
+    })
   }
 
   findAll() {

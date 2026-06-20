@@ -19,7 +19,7 @@ export class SummaryService {
     if (!userData) return { 
       statusCode: 400,
       message: 'No user found.' 
-    } 
+    }; 
 
     const llmClient = await this.llm.createClient(userData.apiKey, userData.llmProvider);
     const summary = await this.llm.generateSummary(llmClient, dto);
@@ -33,11 +33,11 @@ export class SummaryService {
         summary,
         ...dto,
       }
-    })
+    });
   }
 
-  findAll() {
-    return `This action returns all summary`;
+  async findAll() {
+    return await this.prisma.summary.findMany();
   }
 
   findOne(id: number) {

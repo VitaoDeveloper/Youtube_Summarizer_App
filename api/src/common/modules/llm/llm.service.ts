@@ -19,9 +19,9 @@ export class LlmService {
             case 'OpenAI':
                 return createOpenAI({apiKey})('gpt-5.4-pro');
             case 'Anthropic':
-                return createAnthropic({apiKey})('claude-opus-4-6')
+                return createAnthropic({apiKey})('claude-opus-4-6');
             case 'Google':
-                return createGoogleGenerativeAI({apiKey})('gemini-2.5-pro')
+                return createGoogleGenerativeAI({apiKey})('gemini-2.5-pro');
             default:
                 throw new Error('No provider found. Check your profile.');
         }
@@ -31,7 +31,7 @@ export class LlmService {
         const summary = await generateText({
             model: client,
             prompt: `Resuma esse video: ${dto.videoUrl}`
-        })
+        });
         
         return summary.output;
     }

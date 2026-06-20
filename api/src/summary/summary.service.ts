@@ -1,25 +1,38 @@
 import { HttpExceptionBody, Injectable } from '@nestjs/common';
 import { CreateSummaryDto } from './dto/create-summary.dto';
 import { PrismaService } from 'src/common/modules/prisma/prisma.service';
+import { YoutubeVideoService } from 'src/common/modules/youtube-video/youtube-video.service';
 import { LlmService } from 'src/common/modules/llm/llm.service';
 import { UserService } from 'src/user/user.service';
-import { LanguageModel } from 'ai';
+import { Summary } from 'generated/prisma/client';
 
 @Injectable()
 export class SummaryService {
   constructor (
     private prisma: PrismaService,
+    private video: YoutubeVideoService,
     private user: UserService, 
     private llm: LlmService, 
   ) {}
   
-  async create(dto: CreateSummaryDto): Promise<LanguageModel | HttpExceptionBody|any> {
+  async create(dto: CreateSummaryDto): Promise<Summary | HttpExceptionBody> {
     const userData = await this.user.findOne(dto.userId);
-
+    
     if (!userData) return { 
       statusCode: 400,
       message: 'No user found.' 
     }; 
+    
+    const videoId = this.video.getVideoId(dto.videoUrl);
+    if (typeof videoId != 'string') return videoId;
+
+    const [videoTitle, transcript] = await Promise.all([
+      this.video.getVideoTitle(videoId),
+      this.video.trancript(videoId)
+    ])
+    if (typeof videoTitle != 'string') return videoTitle;
+
+    const slug = await this.video.generateSlug(videoTitle);
 
     const llmClient = await this.llm.createClient(userData.apiKey, userData.llmProvider);
     const summary = await this.llm.generateSummary(llmClient, dto);
@@ -27,10 +40,10 @@ export class SummaryService {
     return await this.prisma.summary.create({
       data: {
         topics: ['', ''],
-        videoTitle: '',
-        videoId: '',
-        slug: 'slug',
-        summary,
+        videoTitle,
+        videoId,
+        slug,
+        summary: `${transcript}`,
         ...dto,
       }
     });

@@ -24,6 +24,7 @@ model Summary {
   userId     String
   slug       String   @unique
   videoId    String
+  videoUrl   String
   videoTitle String
   summary    String
   topics     String[]

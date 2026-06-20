@@ -3,7 +3,8 @@ import { Provider } from '../../../../generated/prisma/client';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import type { LanguageModel } from 'ai'
+import { generateText, type LanguageModel } from 'ai'
+import { CreateSummaryDto } from 'src/summary/dto/create-summary.dto';
 
 @Injectable()
 export class LlmService {
@@ -24,5 +25,14 @@ export class LlmService {
             default:
                 throw new Error('No provider found. Check your profile.');
         }
+    }
+
+    async generateSummary(client: LanguageModel, dto: CreateSummaryDto) {
+        const summary = await generateText({
+            model: client,
+            prompt: `Resuma esse video: ${dto.videoUrl}`
+        })
+        
+        return summary.output;
     }
 }

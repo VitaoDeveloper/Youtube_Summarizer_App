@@ -18,7 +18,7 @@ export class SummaryController {
 
   @Get(':slug')
   findOne(@Param('slug') slug: string) {
-    return this.summaryService.findOne(slug);
+    return this.summaryService.findBySlug(slug);
   }
 
   @Delete(':slug')

@@ -40,11 +40,15 @@ export class SummaryService {
     return await this.prisma.summary.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} summary`;
+  async findBySlug(slug: string) {
+    return await this.prisma.summary.findUnique({
+      where: { slug }
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} summary`;
+  async remove(slug: string) {
+    return await this.prisma.summary.delete({
+      where: { slug }
+    });
   }
 }

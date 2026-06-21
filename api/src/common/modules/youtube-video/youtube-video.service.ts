@@ -58,7 +58,7 @@ export class YoutubeVideoService {
     return data.title;
   }
 
-  async trancript(videoId: string) {
+  async transcript(videoId: string) {
     const segments = await fetchTranscript(videoId);
     const transcript = segments.map((segment) => segment.text).join(' ');
     

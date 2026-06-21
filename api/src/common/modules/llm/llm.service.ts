@@ -3,12 +3,15 @@ import { Provider } from '../../../../generated/prisma/client';
 import { createOpenAI } from '@ai-sdk/openai';
 import { createAnthropic } from '@ai-sdk/anthropic';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { generateText, type LanguageModel } from 'ai'
+import { generateObject } from 'ai'
+import type { LanguageModel, ModelMessage } from 'ai';
 import { CreateSummaryDto } from 'src/summary/dto/create-summary.dto';
+import { YoutubeVideoService } from '../youtube-video/youtube-video.service';
+import { z } from 'zod';
 
 @Injectable()
 export class LlmService {
-    constructor () {}
+    constructor (private video: YoutubeVideoService) {}
     
     async getProviders() {
         return Object.values(Provider);
@@ -27,12 +30,32 @@ export class LlmService {
         }
     }
 
-    async generateSummary(client: LanguageModel, dto: CreateSummaryDto) {
-        const summary = await generateText({
+    async generateSummary(client: LanguageModel, dto: CreateSummaryDto, transcription: string) {
+        const schema = z.object({
+            summary: z.string().describe('Main summary of the transcript'),
+            topics: z.array(z.string()).length(4).describe('Four topics extracted from the transcript'),
+        });
+
+        const messages: ModelMessage[] = [
+            {
+                role: "system",
+                content: `You are an expert at summarizing ${dto.length} video transcripts.
+                          The summary must be written in: ${dto.language}.
+                          Extract exactly four topics from the transcript that match the video's purpose.
+                          Each topic should be concise (a few words), not a full sentence.`
+            },
+            {
+                role: "user",
+                content: transcription
+            }
+        ];
+
+        const summary = await generateObject({
             model: client,
-            prompt: `Resuma esse video: ${dto.videoUrl}`
+            schema,
+            messages
         });
         
-        return summary.output;
+        return summary.object;
     }
 }

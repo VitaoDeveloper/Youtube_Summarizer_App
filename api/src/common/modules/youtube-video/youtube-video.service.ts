@@ -2,6 +2,7 @@ import { HttpExceptionBody, Injectable } from '@nestjs/common';
 import { YoutubeVideoId } from 'src/common/value-objects/youtube-video-id.vo';
 import { fetchTranscript } from 'youtube-transcript-plus';
 import { PrismaService } from '../prisma/prisma.service';
+import { randomBytes } from 'crypto';
 
 @Injectable()
 export class YoutubeVideoService {
@@ -17,6 +18,7 @@ export class YoutubeVideoService {
 
   private async slugExists(slug: string) {
     const exists = await this.prisma.summary.findUnique({ 
+      select: { slug: true },
       where: { slug }
     });
     return !!exists;
@@ -32,13 +34,14 @@ export class YoutubeVideoService {
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-');
 
-    let slug = base;
+    let suffix = randomBytes(4).toString('hex');
+    let slug = `${base}-${suffix}`;
     let counter = 1;
 
-    while (await this.slugExists(base)) {
+    while (await this.slugExists(slug)) {
+      console.log("YOU ARE THE LUCKY ONE — slug collision detected! Generating a new one...");
       slug = `${slug}-0${counter}`;
       counter++;
-      return slug;
     }
 
     return slug;

@@ -10,12 +10,12 @@ import { JwtService } from '@nestjs/jwt';
 export class UserService {
   constructor(
     private prisma: PrismaService,
-    private encrypt: HashService,
+    private argon: HashService,
     private jwt: JwtService
   ) {}
   
   async create(dto: CreateUserDto): Promise<{ access_token?: string }> {
-    dto.password = await this.encrypt.hash(dto.password)
+    dto.password = await this.argon.hash(dto.password)
 
     const user = await this.prisma.user.create({ 
       data: dto 
@@ -41,7 +41,7 @@ export class UserService {
   }
 
   async update(id: string, dto: UpdateUserDto): Promise<User> {
-    if (dto.password) dto.password = await this.encrypt.hash(dto.password)
+    if (dto.password) dto.password = await this.argon.hash(dto.password)
     
     return await this.prisma.user.update({
       data: dto,

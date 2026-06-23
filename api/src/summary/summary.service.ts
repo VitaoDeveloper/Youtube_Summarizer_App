@@ -26,13 +26,19 @@ export class SummaryService {
     const videoId = this.video.getVideoId(dto.videoUrl);
     if (typeof videoId != 'string') return videoId;
 
+    const existing = await this.prisma.summary.findFirst({
+      where: { userId: dto.userId, videoId }
+    });
+    if (existing) return existing;
+    
     const [videoTitle, transcription] = await Promise.all([
       this.video.getVideoTitle(videoId),
       this.video.transcript(videoId)
     ]);
     if (typeof videoTitle != 'string') return videoTitle;
-
+    
     const slug = await this.video.generateSlug(videoTitle);
+    
 
     const llmClient = await this.llm.createClient(userData.apiKey, userData.llmProvider);
     const { summary, topics } = await this.llm.generateSummary(llmClient, dto, transcription);

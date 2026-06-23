@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Sun, Moon, Menu, X, LogOut, User } from 'lucide-react'
 import { useAuth } from '@/context/AuthContext'
 import { Button } from '@/components/ui/button'
-import { LanguageSwitcher } from '@/components/ui/language-switcher'
+import { LanguageSwitcher } from '@/components/layout/language-switcher'
 
 export function Header() {
   const { t } = useTranslation()

@@ -24,9 +24,9 @@ createRoot(root).render(
         <AuthProvider>
           <HistoryProvider>
             <RouterProvider router={router} />
+            <Toaster richColors position="bottom-right" />
           </HistoryProvider>
         </AuthProvider>
-        <Toaster richColors position="bottom-right" />
       </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,

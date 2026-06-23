@@ -22,7 +22,10 @@
     "cta": "Get Started",
     "feature1": "AI-Powered Summaries",
     "feature2": "Key Points Extraction",
-    "feature3": "Search History"
+    "feature3": "Search History",
+    "feature1Desc": "Get concise, intelligent summaries powered by state-of-the-art language models",
+    "feature2Desc": "Automatically extract the most important topics and key insights from any video",
+    "feature3Desc": "Keep track of all your summarized videos with a searchable history"
   },
   "summary": {
     "title": "Summarize Video",

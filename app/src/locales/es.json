@@ -22,7 +22,10 @@
     "cta": "Comenzar",
     "feature1": "Resúmenes con IA",
     "feature2": "Extracción de Puntos Clave",
-    "feature3": "Historial de Búsquedas"
+    "feature3": "Historial de Búsquedas",
+    "feature1Desc": "Obtén resúmenes concisos e inteligentes con modelos de lenguaje de última generación",
+    "feature2Desc": "Extrae automáticamente los temas y puntos clave de cualquier video",
+    "feature3Desc": "Mantén un historial buscable de todos tus videos resumidos"
   },
   "summary": {
     "title": "Resumir Video",
@@ -52,12 +55,12 @@
     "password": "Contraseña",
     "confirmPassword": "Confirmar Contraseña",
     "name": "Nombre",
-    "namePlaceholder": "Juan Pérez",
-    "login": "Iniciar sesión",
     "apiKey": "Clave de API",
     "apiKeyPlaceholder": "sk-proj4324f23gh2342f44efjes",
     "llmProvider": "Proveedor de IA",
     "llmProviderPlaceholder": "Seleccione un proveedor",
+    "namePlaceholder": "Juan Pérez",
+    "login": "Iniciar sesión",
     "register": "Registrarse",
     "loggingIn": "Iniciando sesión...",
     "registering": "Creando cuenta...",

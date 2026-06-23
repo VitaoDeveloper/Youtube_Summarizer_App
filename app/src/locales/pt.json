@@ -22,7 +22,10 @@
     "cta": "Começar",
     "feature1": "Resumos com IA",
     "feature2": "Extração de Pontos-Chave",
-    "feature3": "Histórico de Pesquisas"
+    "feature3": "Histórico de Pesquisas",
+    "feature1Desc": "Obtenha resumos concisos e inteligentes com modelos de linguagem de última geração",
+    "feature2Desc": "Extraia automaticamente os tópicos mais importantes de qualquer vídeo",
+    "feature3Desc": "Mantenha um histórico pesquisável de todos os seus vídeos resumidos"
   },
   "summary": {
     "title": "Resumir Vídeo",

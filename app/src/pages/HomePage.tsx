@@ -7,9 +7,9 @@ import { PageTransition } from '@/components/layout/PageTransition'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const features = [
-  { icon: Sparkles, key: 'feature1' },
-  { icon: ListTree, key: 'feature2' },
-  { icon: Clock, key: 'feature3' },
+  { icon: Sparkles, titleKey: 'feature1', descKey: 'feature1Desc' },
+  { icon: ListTree, titleKey: 'feature2', descKey: 'feature2Desc' },
+  { icon: Clock, titleKey: 'feature3', descKey: 'feature3Desc' },
 ] as const
 
 export function HomePage() {
@@ -36,9 +36,9 @@ export function HomePage() {
       </motion.section>
 
       <section className="grid w-full max-w-4xl gap-6 sm:grid-cols-3">
-        {features.map(({ icon: Icon, key }, index) => (
+        {features.map(({ icon: Icon, titleKey, descKey }, index) => (
           <motion.div
-            key={key}
+            key={titleKey}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.1 * (index + 1) }}
@@ -46,11 +46,11 @@ export function HomePage() {
             <Card className="h-full">
               <CardHeader>
                 <Icon className="mb-2 size-8 text-primary" />
-                <CardTitle>{t(`home.${key}`)}</CardTitle>
+                <CardTitle>{t(`home.${titleKey}`)}</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  {t(`home.${key}`)}
+                  {t(`home.${descKey}`)}
                 </p>
               </CardContent>
             </Card>

@@ -165,7 +165,7 @@ export function RegisterPage() {
                 <Select
                   onValueChange={(value) => setValue('llmProvider', value)}
                 >
-                  <SelectTrigger id="llmProvider" aria-invalid={!!errors.llmProvider}>
+                  <SelectTrigger id="llmProvider" aria-invalid={!!errors.llmProvider} aria-describedby={errors.llmProvider ? 'llmProvider-error' : undefined}>
                     <SelectValue placeholder={t('auth.llmProviderPlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>

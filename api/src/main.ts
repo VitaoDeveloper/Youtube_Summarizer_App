@@ -9,7 +9,7 @@ async function bootstrap(): Promise<void> {
 
   app.enableCors({
     origin: [
-      'https://yt-summarizer-henna.vercel.app/', 
+      'https://yt-summarizer-henna.vercel.app', 
       'http://localhost:5173'
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',

@@ -1,23 +1,30 @@
+type Length = 'short'| 'medium' |  'long';
+
 export type SummaryResponse = {
   id: string
   slug: string
   userId: string
   videoId: string
   videoTitle: string
-  thumbnail: string
   summary: string
   language: string
   topics: string[]
-  length: number
+  length: Length
   createdAt: string
 }
 
 export type SummaryListItem = {
   id: string
   videoId: string
-  title: string
-  thumbnail: string
+  videoTitle: string
   createdAt: string
+}
+
+export type SummaryRequest = {
+  videoUrl: string,
+  userId: string,
+  length: Length,
+  language: string
 }
 
 export type ApiError = {

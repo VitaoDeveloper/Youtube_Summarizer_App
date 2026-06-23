@@ -16,6 +16,11 @@ export async function getMe(id: string): Promise<UserResponse> {
   return data
 }
 
+export async function getHistory(id: string) {
+  const { data } = await apiClient.get<UserResponse>(`/user/${id}`)
+  return data.summaries
+}
+
 export async function logout(): Promise<void> {
   await apiClient.post('/auth/logout')
 }

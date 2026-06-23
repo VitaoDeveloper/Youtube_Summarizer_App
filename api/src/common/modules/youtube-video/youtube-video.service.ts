@@ -61,9 +61,16 @@ export class YoutubeVideoService {
     return data.title;
   }
 
-  async transcript(videoId: string) {
-    const transcripts = await fetchTranscript(videoId);
+  async transcript(videoId: string): Promise<string | HttpExceptionBody> {
+    try {
+      const transcripts = await fetchTranscript(videoId);
     
-    return transcripts.map((segment) => segment.text).join(' ');
+      return transcripts.map((segment) => segment.text).join(' ');
+    } catch (err) {
+      return {
+        statusCode: 500,
+        message: `Fatal error: ${err}`,
+      }
+    }
   }
 }

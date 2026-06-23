@@ -35,7 +35,9 @@ export class SummaryService {
       this.video.getVideoTitle(videoId),
       this.video.transcript(videoId)
     ]);
+
     if (typeof videoTitle != 'string') return videoTitle;
+    if (typeof transcription != 'string') return transcription;
     
     const slug = await this.video.generateSlug(videoTitle);
     

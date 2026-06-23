@@ -7,7 +7,7 @@ export class CreateSummaryDto {
     example: 'https://youtube.com/watch?v=...'
   })
   @IsString()
-  url: string;
+  videoUrl: string;
 
   @ApiProperty({
     description: 'UserId related to summary',

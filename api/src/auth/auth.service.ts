@@ -9,7 +9,7 @@ import { JwtService, JwtSignOptions } from '@nestjs/jwt';
 export class AuthService {
   constructor (
     private prisma: PrismaService,
-    private validation: HashService,
+    private argon: HashService,
     private jwt: JwtService
   ) {}
 
@@ -30,7 +30,7 @@ export class AuthService {
     const { exists, user } = await this.userExists(dto.email);
     
     if (exists) {
-      const access = await this.validation.verify(user!.password ,dto.password);
+      const access = await this.argon.verify(user!.password ,dto.password);
 
       const payload = { sub: user!.id, email: user!.email }
       const token = access ? this.jwt.sign(payload) : undefined;

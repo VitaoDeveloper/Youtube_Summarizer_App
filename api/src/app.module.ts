@@ -7,8 +7,7 @@ import { PrismaModule } from './common/modules/prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { HashModule } from './common/modules/hash/hash.module';
-import { HashService } from './common/modules/hash/hash.service';
-import { LlmController } from './common/modules/llm/llm.controller';
+import { YoutubeVideoModule } from './common/modules/youtube-video/youtube-video.module';
 
 @Module({
   imports: [
@@ -16,8 +15,9 @@ import { LlmController } from './common/modules/llm/llm.controller';
     AuthModule,
     SummaryModule,
     HashModule,
-    LlmModule, 
-    PrismaModule 
+    LlmModule,
+    YoutubeVideoModule, 
+    PrismaModule,  
   ],
   controllers: [AppController],
   providers: [AppService],

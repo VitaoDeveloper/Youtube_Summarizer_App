@@ -19,8 +19,8 @@ export function HistoryPage() {
   const { data, isLoading, isError } = useHistory()
   const deleteSummary = useDeleteSummary()
 
-  const handleDelete = (id: string) => {
-    deleteSummary.mutate(id, {
+  const handleDelete = (slug: string) => {
+    deleteSummary.mutate(slug, {
       onSuccess: () => toast.success(t('history.deleteSuccess')),
       onError: () => toast.error(t('errors.network')),
     })
@@ -53,28 +53,23 @@ export function HistoryPage() {
             icon={<Clock className="size-12" />}
             title={t('errors.network')}
           />
-        ) : data && data.data.length > 0 ? (
+        ) : data && data.length > 0 ? (
           <div className="flex flex-col gap-4">
-            {data.data
+            {data
               .filter((item) =>
-                item.title.toLowerCase().includes(search.toLowerCase()),
+                item.videoTitle.toLowerCase().includes(search.toLowerCase()),
               )
               .map((item) => (
                 <Card key={item.id}>
                   <CardContent className="flex items-center gap-4 py-4">
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      className="h-16 w-24 flex-shrink-0 rounded object-cover"
-                    />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium">{item.title}</p>
+                      <p className="truncate font-medium">{item.videoTitle}</p>
                       <p className="text-sm text-muted-foreground">
                         {timeAgo(item.createdAt, i18n.language)}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Link to={`/summarize?id=${item.id}`}>
+                      <Link to={`/summarize?slug=${item.slug}`}>
                         <Button variant="outline" size="sm">
                           {t('history.view')}
                         </Button>
@@ -82,7 +77,7 @@ export function HistoryPage() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handleDelete(item.slug)}
                         aria-label={t('history.delete')}
                       >
                         <Trash2 className="size-4" />

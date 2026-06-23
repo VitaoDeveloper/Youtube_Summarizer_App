@@ -1,18 +1,23 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { getHistory, getSummaryById, deleteSummary } from '@/api/youtube'
+import { getSummaryBySlug, deleteSummary } from '@/api/youtube'
+import { getHistory } from '@/api/auth'
+import { useAuth } from '@/context/AuthContext'
 
-export function useHistory(page = 1) {
+export function useHistory() {
+  const { user } = useAuth()
+
   return useQuery({
-    queryKey: ['history', page],
-    queryFn: () => getHistory(page),
+    queryKey: ['history', user?.id],
+    queryFn: () => getHistory(user!.id),
+    enabled: !!user?.id,
   })
 }
 
-export function useSummaryDetail(id: string | undefined) {
+export function useSummaryDetail(slug: string | undefined) {
   return useQuery({
-    queryKey: ['summary', id],
-    queryFn: () => getSummaryById(id!),
-    enabled: !!id,
+    queryKey: ['summary', slug],
+    queryFn: () => getSummaryBySlug(slug!),
+    enabled: !!slug,
   })
 }
 

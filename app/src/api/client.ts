@@ -1,15 +1,16 @@
 import axios from 'axios'
 import i18n from '@/lib/i18n'
 
+const API_URL = import.meta.env.VITE_API_URL as string | undefined
+const BYPASS_TOKEN = import.meta.env.VITE_VERCEL_BYPASS_TOKEN as string | undefined
+
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_URL,
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },
-  params: {
-    'x-vercel-protection-bypass': import.meta.env.VITE_VERCEL_BYPASS_TOKEN,
-  },
+  params: BYPASS_TOKEN ? { 'x-vercel-protection-bypass': BYPASS_TOKEN } : undefined,
 })
 
 apiClient.interceptors.request.use(config => {

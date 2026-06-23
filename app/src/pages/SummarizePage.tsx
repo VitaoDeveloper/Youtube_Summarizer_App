@@ -12,9 +12,9 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { PageTransition } from '@/components/layout/PageTransition'
 import { SummaryContent } from '@/components/summary/SummaryContent'
 import { isValidYoutubeUrl } from '@/utils/validation'
-import { formatDuration } from '@/utils/formatters'
 import { useSummarize } from '@/hooks/useSummarize'
 import { useKeyboard } from '@/hooks/useKeyboard'
+import { useAuth } from '@/context/AuthContext'
 import { Video, AlertCircle } from 'lucide-react'
 
 const schema = z.object({
@@ -24,7 +24,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>
 
 export function SummarizePage() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const { user } = useAuth()
   const summarize = useSummarize()
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -39,20 +40,34 @@ export function SummarizePage() {
   })
 
   const onSubmit = (data: FormData) => {
-    summarize.mutate(data.url, {
-      onSuccess: () => {
-        toast.success(t('summary.success'))
+    if (!user) return
+
+    summarize.mutate(
+      {
+        videoUrl: data.url,
+        userId: user.id,
+        length: 'medium',
+        language: i18n.language,
       },
-      onError: (err: Error) => {
-        toast.error(err.message)
+      {
+        onSuccess: () => {
+          toast.success(t('summary.success'))
+        },
+        onError: (err: Error) => {
+          toast.error(err.message)
+        },
       },
-    })
+    )
   }
 
   useKeyboard({
     'Ctrl+Enter': () => { formRef.current?.requestSubmit() },
     'Escape': () => { setValue('url', ''); resetField('url') },
   })
+
+  const thumbnailUrl = summarize.data?.videoId
+    ? `https://i.ytimg.com/vi/${summarize.data.videoId}/hqdefault.jpg`
+    : null
 
   return (
     <PageTransition>
@@ -104,16 +119,15 @@ export function SummarizePage() {
             ) : summarize.data ? (
               <div className="flex flex-col gap-4">
                 <div className="flex items-center gap-4">
-                  <img
-                    src={summarize.data.thumbnail}
-                    alt={summarize.data.videoTitle}
-                    className="h-20 w-32 rounded object-cover"
-                  />
+                  {thumbnailUrl && (
+                    <img
+                      src={thumbnailUrl}
+                      alt={summarize.data.videoTitle}
+                      className="h-20 w-32 rounded object-cover"
+                    />
+                  )}
                   <div>
                     <h3 className="font-semibold">{summarize.data.videoTitle}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {t('summary.duration')}: {formatDuration(summarize.data.length)}
-                    </p>
                   </div>
                 </div>
                 <SummaryContent content={summarize.data.summary} />

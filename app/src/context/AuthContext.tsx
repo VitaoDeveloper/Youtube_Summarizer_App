@@ -59,7 +59,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     let cancelled = false
-    let userId: string | null = null
+    let userId: string
 
     try {
       const claims = jwtDecode<{ sub: string }>(token)

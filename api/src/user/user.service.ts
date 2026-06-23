@@ -31,11 +31,14 @@ export class UserService {
   } 
 
   async findAll(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+    return await this.prisma.user.findMany({
+      include: { summaries: true }
+    });
   }
 
   async findOne(id: string): Promise<User | null> {
-    return await this.prisma.user.findUnique({ 
+    return await this.prisma.user.findUnique({
+      include: { summaries: true },
       where: { id } 
     });
   }

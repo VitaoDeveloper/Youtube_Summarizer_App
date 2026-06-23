@@ -46,7 +46,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useLocalStorage<string | null>('auth_token', null)
+  const [token, setToken] = useLocalStorage<string | null>('auth_token', null, true)
   const [{ user, isLoading }, dispatch] = useReducer(authReducer, {
     user: null,
     isLoading: true,

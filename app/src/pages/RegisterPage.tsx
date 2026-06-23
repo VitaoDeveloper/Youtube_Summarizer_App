@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { PageTransition } from '@/components/layout/PageTransition'
+import type { AiProvider } from '@/types/api'
 import { UserPlus } from 'lucide-react'
 
 function createSchema(providers: string[]) {
@@ -76,7 +77,7 @@ export function RegisterPage() {
           email: data.email,
           password: data.password,
           apiKey: data.apiKey,
-          llmProvider: data.llmProvider,
+          llmProvider: data.llmProvider as AiProvider,
         })
         toast.success(t('auth.registerSuccess'))
         void navigate('/', { replace: true })

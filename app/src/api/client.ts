@@ -16,10 +16,7 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(config => {
   const token = localStorage.getItem('auth_token')
   if (token) {
-    const parsed = JSON.parse(token) as string | null
-    if (parsed) {
-      config.headers.Authorization = `Bearer ${parsed}`
-    }
+    config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })

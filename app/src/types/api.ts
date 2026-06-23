@@ -15,6 +15,7 @@ export type SummaryResponse = {
 
 export type SummaryListItem = {
   id: string
+  slug: string
   videoId: string
   videoTitle: string
   createdAt: string
@@ -39,7 +40,6 @@ export type UserResponse = {
   id: string
   name: string
   email: string
-  password: string
   apiKey: string
   llmProvider: AiProvider
   createdAt: string
@@ -58,7 +58,6 @@ export type RegisterResponse = {
   id: string
   name: string
   email: string
-  password: string
   apiKey: string
   llmProvider: AiProvider
   createdAt: string
@@ -80,7 +79,7 @@ export type RegisterDto = {
   email: string
   password: string
   apiKey: string
-  llmProvider: string
+  llmProvider: AiProvider
 }
 
 export type PaginatedResponse<T> = {

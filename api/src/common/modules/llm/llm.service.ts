@@ -50,12 +50,16 @@ export class LlmService {
             }
         ];
 
-        const summary = await generateObject({
-            model: client,
-            schema,
-            messages
-        });
+        // const summary = await generateObject({
+        //     model: client,
+        //     schema,
+        //     messages
+        // });
         
-        return summary.object;
+        // return summary.object;
+        return {
+            summary: 'created',
+            topics: ['created']
+        }
     }
 }

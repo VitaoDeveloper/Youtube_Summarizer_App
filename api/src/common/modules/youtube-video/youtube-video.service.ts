@@ -1,6 +1,6 @@
 import { HttpExceptionBody, Injectable } from '@nestjs/common';
-import { YoutubeVideoId } from 'src/common/value-objects/youtube-video-id.vo';
-import { fetchTranscript } from 'youtube-transcript-plus';
+import { YoutubeVideoId } from '../../value-objects/youtube-video-id.vo';
+import { YoutubeTranscript } from 'youtube-transcript';
 import { PrismaService } from '../prisma/prisma.service';
 import { randomBytes } from 'crypto';
 
@@ -63,7 +63,7 @@ export class YoutubeVideoService {
 
   async transcript(videoId: string): Promise<string | HttpExceptionBody> {
     try {
-      const transcripts = await fetchTranscript(videoId);
+      const transcripts = await YoutubeTranscript.fetchTranscript(videoId);
     
       return transcripts.map((segment) => segment.text).join(' ');
     } catch (err) {

@@ -51,7 +51,7 @@ export class SummaryService {
         videoTitle,
         videoId,
         slug,
-        summary,
+        summary: transcription,
         ...dto, 
       }
     });
